@@ -161,7 +161,7 @@ public class VentanaUsuario extends JFrame {
 		table = new JTable();
 		table.setRowHeight(50);
 		table.setShowVerticalLines(false);
-		table.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		table.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		table.setShowHorizontalLines(false);
 		table.setShowGrid(false);
 		table.setBackground(new Color(227, 255, 235));
@@ -180,20 +180,31 @@ public class VentanaUsuario extends JFrame {
 				return columnTypes[columnIndex];
 			}
 		});
-		table.getColumnModel().getColumn(0).setPreferredWidth(59);
+		table.getColumnModel().getColumn(0).setPreferredWidth(65);
+		table.getColumnModel().getColumn(0).setMaxWidth(100);
+		table.getColumnModel().getColumn(1).setPreferredWidth(62);
+		table.getColumnModel().getColumn(1).setMaxWidth(100);
 		table.getColumnModel().getColumn(2).setPreferredWidth(201);
-		table.getColumnModel().getColumn(3).setPreferredWidth(153);
-		table.getColumnModel().getColumn(4).setPreferredWidth(100);
+		table.getColumnModel().getColumn(3).setPreferredWidth(100);
+		table.getColumnModel().getColumn(3).setMaxWidth(100);
+		table.getColumnModel().getColumn(4).setPreferredWidth(90);
+		table.getColumnModel().getColumn(4).setMaxWidth(90);
 		// Crear un DefaultTableCellRenderer personalizado para alinear el texto centrado en la columna 0
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
-
+		TableColumn columnaCodigo = table.getColumnModel().getColumn(1);
+		columnaCodigo.setCellRenderer(centerRenderer);
+		TableColumn columnaFecha = table.getColumnModel().getColumn(3);
+		columnaFecha.setCellRenderer(centerRenderer);
+		
 		
 		// Obtener el renderizador de celdas por defecto
 		DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
 		// Asignar el renderizador personalizado a una columna específica (por ejemplo, la columna 1) y establecer el color de fondo deseado (por ejemplo, rojo)
-		int targetColumn = 0; // Columna a la que se le aplicará el color de fondo
 		Color backgroundColor = Color.green;
+		defaultRenderer.setBackground(backgroundColor);
+		TableColumn columnaPuesto = table.getColumnModel().getColumn(0);
+		columnaPuesto.setCellRenderer(defaultRenderer);
 		
 		// Crear un renderizador personalizado para la columna de botones
 		TableCellRenderer buttonRenderer = new JTableButtonRenderer();
@@ -287,10 +298,8 @@ public class VentanaUsuario extends JFrame {
 					} catch (NumberFormatException e1) {
 						JOptionPane.showMessageDialog(null,"Ingresa una Referencia válida", "Error", JOptionPane.WARNING_MESSAGE);
 
-					}
-								
-				}
-				
+					}							
+				}				
 			}
 		});
 		btnVerRef.setFont(new Font("Tahoma", Font.BOLD, 15));
