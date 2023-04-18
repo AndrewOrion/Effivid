@@ -78,7 +78,7 @@ public class VentanaLogin extends JFrame {
 						textPassword.getText().equals("admin")) {
 					textUsuario.setText("");
 					textPassword.setText("");
-					VentanaAdmin frame = new VentanaAdmin();
+					VentanaUsuario frame = new VentanaUsuario();
 					frame.setVisible(true);
 				}
 				else {

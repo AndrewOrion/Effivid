@@ -42,8 +42,8 @@ public class VentanaUsuario extends JFrame {
 		
 	//DEFINIR COMBOBOX PRODUCTO
 			JComboBox<String> cbProducto = new JComboBox<String>();
-			cbProducto.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			cbProducto.setBounds(134, 336, 322, 31);
+			cbProducto.setFont(new Font("Tahoma", Font.BOLD, 15));
+			cbProducto.setBounds(109, 336, 377, 31);
 			cbProducto.setBackground(new Color(227, 255, 235));
 
 			
@@ -66,8 +66,8 @@ public class VentanaUsuario extends JFrame {
 		//DEFINIR COMBOBOX MODELO
 			JComboBox<String> cbModelo = new JComboBox<String>();
 			
-			cbModelo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			cbModelo.setBounds(134, 398, 322, 31);
+			cbModelo.setFont(new Font("Tahoma", Font.BOLD, 15));
+			cbModelo.setBounds(109, 398, 377, 31);
 			cbModelo.setBackground(new Color(227, 255, 235));
 
 			cbModelo.addItem("- Seleccione el modelo -" );
@@ -110,41 +110,43 @@ public class VentanaUsuario extends JFrame {
 		txtRef = new JTextField();
 		txtRef.setToolTipText("Inserte el número de referencia del producto sobre el que desee ver el vídeo");
 		txtRef.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		txtRef.setBounds(134, 104, 322, 31);
+		txtRef.setBounds(148, 143, 338, 31);
 		contentPane.add(txtRef);
 		txtRef.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Nº Referencia:");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel.setBounds(10, 109, 94, 20);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel.setBounds(10, 147, 114, 20);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblO = new JLabel("________________________________________________________________");
 		lblO.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblO.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblO.setBounds(25, 240, 461, 20);
+		lblO.setBounds(27, 272, 461, 20);
 		contentPane.add(lblO);
 		
 		JLabel lblProducto = new JLabel("Producto:");
 		lblProducto.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblProducto.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblProducto.setBounds(33, 341, 71, 20);
+		lblProducto.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblProducto.setBounds(0, 341, 99, 20);
 		contentPane.add(lblProducto);
 		
 		JLabel lblModelo = new JLabel("Modelo:");
 		lblModelo.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblModelo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblModelo.setBounds(33, 403, 71, 20);
+		lblModelo.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblModelo.setBounds(8, 403, 91, 20);
 		contentPane.add(lblModelo);
 		
 		contentPane.add(cbProducto);
 		contentPane.add(cbModelo);
 		
-		JLabel lblNewLabel_1 = new JLabel("OPCIONES:");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_1.setBounds(25, 39, 358, 31);
+		JLabel lblNewLabel_1 = new JLabel("OPCIONES PARA BUSCAR:");
+		lblNewLabel_1.setBackground(new Color(128, 255, 128));
+		lblNewLabel_1.setOpaque(true);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setBounds(70, 63, 358, 31);
 		contentPane.add(lblNewLabel_1);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -168,33 +170,30 @@ public class VentanaUsuario extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"PUESTO", "NOMBRE", "FECHA SUBIDA", "VIDEO"
+				"PUESTO", "C\u00D3DIGO", "NOMBRE", "FECHA SUBIDA", "VIDEO"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				String.class, String.class, String.class, Object.class
+				String.class, Integer.class, String.class, String.class, Object.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});
 		table.getColumnModel().getColumn(0).setPreferredWidth(59);
-		table.getColumnModel().getColumn(1).setPreferredWidth(201);
-		table.getColumnModel().getColumn(2).setPreferredWidth(153);
-		table.getColumnModel().getColumn(3).setPreferredWidth(100);
-		// Crear un DefaultTableCellRenderer personalizado para alinear el texto a la derecha en la columna 0
+		table.getColumnModel().getColumn(2).setPreferredWidth(201);
+		table.getColumnModel().getColumn(3).setPreferredWidth(153);
+		table.getColumnModel().getColumn(4).setPreferredWidth(100);
+		// Crear un DefaultTableCellRenderer personalizado para alinear el texto centrado en la columna 0
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
-		table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-		table.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
 
 		
 		// Obtener el renderizador de celdas por defecto
 		DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
 		// Asignar el renderizador personalizado a una columna específica (por ejemplo, la columna 1) y establecer el color de fondo deseado (por ejemplo, rojo)
 		int targetColumn = 0; // Columna a la que se le aplicará el color de fondo
-		Color backgroundColor = Color.green; // Color de fondo deseado
-		table.getColumnModel().getColumn(targetColumn).setCellRenderer(new ColumnBackgroundRenderer(targetColumn, backgroundColor));
+		Color backgroundColor = Color.green;
 		
 		// Crear un renderizador personalizado para la columna de botones
 		TableCellRenderer buttonRenderer = new JTableButtonRenderer();
@@ -234,14 +233,11 @@ public class VentanaUsuario extends JFrame {
 				String sProducto = "";
 				String sModelo = "";
 				int iRef = 0;
-				String sRef = "";
 				sProducto = cbProducto.getSelectedItem().toString();
 				sModelo = cbModelo.getSelectedItem().toString();
-				String sModel = cbModelo.getSelectedItem().toString();
 
 				ProductoDAO producDAO = new ProductoDAO();
-				iRef = producDAO.obtenerRef(sModel);
-				sRef = Integer.toString(iRef);
+				iRef = producDAO.obtenerRef(sModelo);
 				if (iRef == 0 && sProducto.equals("- Seleccione un producto -"))
 				{
 					JOptionPane.showMessageDialog(null,"Rellene alguna de las dos opciones:", "Error", JOptionPane.WARNING_MESSAGE);
@@ -254,7 +250,7 @@ public class VentanaUsuario extends JFrame {
 			
 		});
 		btnVer.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnVer.setBounds(106, 480, 131, 31);
+		btnVer.setBounds(71, 480, 131, 31);
 		contentPane.add(btnVer);
 		
 		JButton btnCerrar = new JButton("Cerrar");
@@ -265,7 +261,7 @@ public class VentanaUsuario extends JFrame {
 			}
 		});
 		btnCerrar.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnCerrar.setBounds(311, 480, 131, 31);
+		btnCerrar.setBounds(297, 480, 131, 31);
 		contentPane.add(btnCerrar);
 		
 		
@@ -298,9 +294,86 @@ public class VentanaUsuario extends JFrame {
 			}
 		});
 		btnVerRef.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnVerRef.setBounds(106, 179, 131, 31);
+		btnVerRef.setBounds(71, 210, 131, 31);
 		contentPane.add(btnVerRef);
 		
+		JLabel lblNewLabel_2 = new JLabel("Bienvenido");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_2.setBounds(25, 29, 94, 13);
+		contentPane.add(lblNewLabel_2);
+		
+		JLabel lblUsuario = new JLabel("");
+		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblUsuario.setBounds(148, 29, 140, 13);
+		contentPane.add(lblUsuario);
+		
+		
+		//if (usuario es admin)
+		JPanel panelAdmin = new JPanel();
+		panelAdmin.setBorder(null);
+		panelAdmin.setBackground(new Color(225, 255, 239));
+		panelAdmin.setBounds(10, 532, 469, 169);
+		contentPane.add(panelAdmin);
+		panelAdmin.setLayout(null);
+		
+		JButton btnAdd = new JButton("AÑADIR VÍDEO");
+		btnAdd.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnAdd.setBounds(28, 102, 169, 57);
+		panelAdmin.add(btnAdd);
+		
+		JButton btnEliminar = new JButton("ELIMINAR VÍDEO");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int iElemento=-1;
+				int codigo_video;
+				int iResultado;
+				int iRespuesta;
+				
+				iElemento = table.getSelectedRow();
+				if (iElemento == -1) {
+					JOptionPane.showMessageDialog(null, "Ninguna fila seleccionada");
+				}
+				else {
+				iRespuesta = JOptionPane.showConfirmDialog(null, "¿Estás seguro?", "Eliminar", 
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				
+				if (iRespuesta == 0)
+					{ //si usuario dice SI
+						if (iElemento >= 0) {
+							codigo_video = (int) table.getValueAt(iElemento, 1); //cojo el id del elemento (fila 0)
+							VideoDAO videoDAO = new VideoDAO();
+										
+							iResultado = videoDAO.eliminarVideo(codigo_video);
+							String sRef = txtRef.getText();
+							int iRef = Integer.parseInt(sRef);
+							rellenarVentana(iRef);
+						
+							if (iResultado == 0) {
+								JOptionPane.showMessageDialog(null, "No se ha podido eliminar la fila");
+							}
+						}
+					}
+				}
+			}
+		});
+		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnEliminar.setBounds(246, 102, 183, 57);
+		panelAdmin.add(btnEliminar);
+		
+		JLabel lblNewLabel_3 = new JLabel("Opciones de administrador:");
+		lblNewLabel_3.setOpaque(true);
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_3.setBackground(new Color(128, 255, 128));
+		lblNewLabel_3.setBounds(112, 49, 221, 26);
+		panelAdmin.add(lblNewLabel_3);
+		
+		JLabel lblO_1 = new JLabel("________________________________________________________________");
+		lblO_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblO_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblO_1.setBounds(10, 0, 461, 20);
+		panelAdmin.add(lblO_1);
+		//end panel admin
 
 		
 	}
@@ -339,14 +412,14 @@ public class VentanaUsuario extends JFrame {
 		SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 		String sFecha;
 		int numeroPuestoAnterior = -1;//para que solo imprima 1 vez l puesto
-		
+		int codigo_video;
 		VideoDAO videoDAO = new VideoDAO();
 		ArrayList<Video> lista = new ArrayList<Video>();
 		
 		lista = videoDAO.obtenerVideos(iRef);//obtengo y luego recorro
 		txtRef.setText(sRef);
 		if (lista.isEmpty()) { // Verificar si la lista está vacía
-	        JOptionPane.showMessageDialog(null, "El producto no existe", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+	        JOptionPane.showMessageDialog(null, "El producto no existe o no contiene vídeos", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
 	    } else {
 			for (Video vi : lista) {
 			    int totalFilas = modelo.getRowCount(); // Obtener el número total de filas en la tabla
@@ -355,20 +428,25 @@ public class VentanaUsuario extends JFrame {
 				NombreVideoRenderer nombreVideoRenderer = new NombreVideoRenderer();
 	
 				// Asignar el renderizador a la columna del nombre del video (suponiendo que sea la columna 1)
-				table.getColumnModel().getColumn(1).setCellRenderer(nombreVideoRenderer);
-	
+				table.getColumnModel().getColumn(2).setCellRenderer(nombreVideoRenderer);
+				
 				if (vi.getPuesto() != numeroPuestoAnterior) {
 					String puesto = "Puesto "+vi.getPuesto();
+					
 			        Object file[] = {	  
 			            puesto,	
+			            codigo_video = vi.getCod_video(),			  
 			            vi.getNombre(),
 			            sFecha = formatoFecha.format(vi.getFecha_subida())
 			        };
+		            System.out.print(codigo_video);
+
 			        modelo.addRow(file);
 				} else {
 			        // Mostrar solo el nombre del video en filas consecutivas con el mismo número de puesto
 			        Object file[] = {
 			            "", // Espacio vacío en lugar del número de puesto
+			            codigo_video = vi.getCod_video(),
 			            vi.getNombre(),
 			            formatoFecha.format(vi.getFecha_subida()),
 			        };
@@ -377,7 +455,7 @@ public class VentanaUsuario extends JFrame {
 			    numeroPuestoAnterior = vi.getPuesto();
 			}
 	    }
-		TableColumn button = table.getColumnModel().getColumn(3); // Obtener la columna de botones (índice 3)
+		TableColumn button = table.getColumnModel().getColumn(4); // Obtener la columna de botones (índice 3)
 		button.setCellRenderer(new ButtonRenderer()); // Establecer el renderizador de la columna como ButtonRenderer
 		button.setCellEditor(new ButtonEditor(new JCheckBox())); // Establecer el editor de celdas de la columna como ButtonEditor
 
@@ -412,7 +490,7 @@ public class VentanaUsuario extends JFrame {
 	            public void actionPerformed(ActionEvent e) {
 	            	 int row = table.getSelectedRow(); // Obtener el índice de la fila seleccionada en la tabla
 	            	    if (row >= 0) {
-	            	      String nombreVideo = (String) table.getValueAt(row, 1);
+	            	      String nombreVideo = (String) table.getValueAt(row, 2);
 	                AbrirVideo(nombreVideo);
 	            	    }
 	            }

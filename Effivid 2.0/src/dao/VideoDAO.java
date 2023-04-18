@@ -30,7 +30,7 @@ private ConexionBD conexion;
 		String sSQL;	
 		try
 		{
-			sSQL = "SELECT puesto, nombre, fecha_subida FROM videos WHERE ref_producto = ? ORDER BY puesto ASC;";
+			sSQL = "SELECT puesto, nombre, fecha_subida, codigo_video FROM videos WHERE ref_producto = ? ORDER BY puesto ASC;";
 			pstmt = con.prepareStatement(sSQL);
 			pstmt.setInt(1, Ref);
 			rs = pstmt.executeQuery();
@@ -42,8 +42,9 @@ private ConexionBD conexion;
 				int iPuesto = rs.getInt("puesto");
 				String sNombre = rs.getString("nombre");
 				Date fechaActual = rs.getDate("fecha_subida");
+				int iCodigo_video = rs.getInt("codigo_video");
 
-				Video vid = new Video(sNombre, Ref, iPuesto, fechaActual);
+				Video vid = new Video(iCodigo_video, sNombre, Ref, iPuesto, fechaActual);
 				lista.add(vid);
 			}
 		}
@@ -123,4 +124,68 @@ private ConexionBD conexion;
 			}
 			return lista2;	
 		}*/
+	/*
+	 public int insertarTransaccion(Transaccion transaccion) {
+				// Obtenemos una conexion a la base de datos.
+				ConexionBD conexion = new ConexionBD(); 
+				Connection con = conexion.getConexion(); 
+				PreparedStatement consulta = null; 
+				String SQL = "INSERT INTO transacciones (fecha, cantidad, categoria, "
+						+ "tipo, descripcion) VALUES (?,?,?,?,?)";
+				int resultado=0; 
+				try { 
+					consulta = con.prepareStatement(SQL); 
+					consulta.setDate(1, transaccion.getFecha());
+					consulta.setDouble(2, transaccion.getCantidad());
+					consulta.setString(3,  transaccion.getCategoria());
+					consulta.setString(4,  transaccion.getTipo());
+					consulta.setString(5,  transaccion.getDescripcion());
+					
+					resultado = consulta.executeUpdate(); 
+					
+				} catch (SQLException e) { 
+					System.out.println("Error al realizar la inserción: " +e.getMessage()); 
+					} 
+				finally { 
+					try { 
+						consulta.close(); 
+						conexion.desconectar(); 
+						} 
+					catch (SQLException e) { 
+						System.out.println("Error al liberar recursos: " +e.getMessage()); 
+					} catch (Exception e) { 
+						
+					} 
+				} 
+			return resultado; 
+		}*/
+		
+		public int eliminarVideo (int codigo_video) { 
+			// Obtenemos una conexion a la base de datos. 
+			Connection con = conexion.getConexion(); 
+			PreparedStatement consulta = null; 
+			String SQL = "DELETE FROM videos WHERE codigo_video = ?";
+			int resultado=0; 
+			try { 
+				consulta = con.prepareStatement(SQL); 
+				consulta.setInt(1, codigo_video); 
+				resultado = consulta.executeUpdate(); 
+				if (resultado != 0) {
+					System.out.println("Vídeo borrado");
+				}
+				} catch (SQLException e) { 
+					System.out.println("Error al realizar el borrado:" +e.getMessage()); 
+					} finally { 
+						try { 
+							consulta.close(); 
+							conexion.desconectar(); 
+							} catch (SQLException e) {
+								System.out.println("Error al liberar recursos: " +e.getMessage()); 
+								} catch (Exception e) { 
+									
+								} 
+						} 
+		return resultado; 
+		}
+	  
 }

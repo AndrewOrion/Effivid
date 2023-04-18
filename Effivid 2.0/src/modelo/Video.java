@@ -25,7 +25,6 @@ public class Video
 	}
 	
 	
-
 	public Video(String nombre, int ref_producto, int puesto, Date fecha_subida) {
 		super();
 		this.nombre = nombre;
