@@ -326,6 +326,12 @@ public class VentanaUsuario extends JFrame {
 		panelAdmin.setLayout(null);
 		
 		JButton btnAdd = new JButton("AÑADIR VÍDEO");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaSubir frame = new VentanaSubir(txtRef.getText());
+				frame.setVisible(true);
+			}
+		});
 		btnAdd.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnAdd.setBounds(28, 102, 169, 57);
 		panelAdmin.add(btnAdd);
@@ -542,7 +548,8 @@ public class VentanaUsuario extends JFrame {
 
 	        // Obtener el nombre del video a partir de la ruta completa
 	        String nombreVideo = rutaCompleta.substring(rutaCompleta.lastIndexOf("\\") + 1);
-
+	        
+	      
 	        // Usar el nombre del video como valor a mostrar en la celda
 	        return super.getTableCellRendererComponent(table, nombreVideo, isSelected, hasFocus, row, column);
 	    }
