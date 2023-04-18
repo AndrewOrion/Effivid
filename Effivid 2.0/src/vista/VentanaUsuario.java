@@ -1,0 +1,489 @@
+package vista;
+
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+
+import conexion.ConexionBD;
+import dao.ProductoDAO;
+import modelo.Producto;
+import modelo.Video;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import dao.VideoDAO;
+import java.io.File;
+import java.io.IOException;
+import javax.swing.*;
+import java.awt.*;
+
+@SuppressWarnings("serial")
+public class VentanaUsuario extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField txtRef;
+	private ConexionBD conexion;
+	private JButton[] buttons;
+	private JTable table;
+
+	/**
+	 * Create the frame.
+	 */
+	public VentanaUsuario() 
+	{
+		
+	this.conexion = new ConexionBD();
+		
+	//DEFINIR COMBOBOX PRODUCTO
+			JComboBox<String> cbProducto = new JComboBox<String>();
+			cbProducto.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			cbProducto.setBounds(134, 336, 322, 31);
+			cbProducto.setBackground(new Color(227, 255, 235));
+
+			
+			ArrayList<Producto> lista = new ArrayList<Producto>();
+			
+			ProductoDAO productoDAO = new ProductoDAO();
+			lista = productoDAO.obtenerDenominacion();
+					
+			cbProducto.removeAllItems();
+			cbProducto.addItem("- Seleccione un producto -" );
+			
+			for(Producto producto:lista)
+			{
+				String denominacion = producto.getDenominacion();
+				cbProducto.addItem(denominacion);
+			}
+			cbProducto.setSelectedIndex(0);
+			cbProducto.repaint();
+			
+		//DEFINIR COMBOBOX MODELO
+			JComboBox<String> cbModelo = new JComboBox<String>();
+			
+			cbModelo.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			cbModelo.setBounds(134, 398, 322, 31);
+			cbModelo.setBackground(new Color(227, 255, 235));
+
+			cbModelo.addItem("- Seleccione el modelo -" );
+			
+		//ASOCIAR ACTIONLISTENER AL COMBOBOX PRODUCTO
+			cbProducto.addActionListener(new ActionListener() 
+			{
+				public void actionPerformed(ActionEvent e) 
+				{
+					String sDenominacion = cbProducto.getSelectedItem().toString();
+						
+		//VACIAR Y RELLENAR COMBOBOX MODELO
+				cbModelo.removeAllItems();
+				
+				ArrayList<Producto> lista2 = new ArrayList<Producto>();
+				ProductoDAO producDAO = new ProductoDAO();
+				lista2 = producDAO.obtenerProductos(sDenominacion);
+				
+				for(Producto produc:lista2)
+				{
+					String descripcion = produc.getDescripcion();
+					cbModelo.addItem(descripcion);
+				}
+				cbModelo.setSelectedIndex(0);
+				cbModelo.repaint();
+			}
+			});
+		
+		
+		setTitle("Visualización de videos");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 1333, 748);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new Color(227, 255, 235));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+	
+		txtRef = new JTextField();
+		txtRef.setToolTipText("Inserte el número de referencia del producto sobre el que desee ver el vídeo");
+		txtRef.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		txtRef.setBounds(134, 104, 322, 31);
+		contentPane.add(txtRef);
+		txtRef.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("Nº Referencia:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel.setBounds(10, 109, 94, 20);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblO = new JLabel("________________________________________________________________");
+		lblO.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblO.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblO.setBounds(25, 240, 461, 20);
+		contentPane.add(lblO);
+		
+		JLabel lblProducto = new JLabel("Producto:");
+		lblProducto.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblProducto.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblProducto.setBounds(33, 341, 71, 20);
+		contentPane.add(lblProducto);
+		
+		JLabel lblModelo = new JLabel("Modelo:");
+		lblModelo.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblModelo.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblModelo.setBounds(33, 403, 71, 20);
+		contentPane.add(lblModelo);
+		
+		contentPane.add(cbProducto);
+		contentPane.add(cbModelo);
+		
+		JLabel lblNewLabel_1 = new JLabel("OPCIONES:");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1.setBounds(25, 39, 358, 31);
+		contentPane.add(lblNewLabel_1);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportBorder(null);
+		scrollPane.setBorder(null);
+		scrollPane.setBounds(496, 23, 813, 678);
+		scrollPane.setBackground(new Color(227, 255, 225));
+		scrollPane.setViewportBorder(BorderFactory.createEmptyBorder());
+		scrollPane.setBorder(BorderFactory.createEmptyBorder());
+		contentPane.add(scrollPane);
+		
+		table = new JTable();
+		table.setRowHeight(50);
+		table.setShowVerticalLines(false);
+		table.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		table.setShowHorizontalLines(false);
+		table.setShowGrid(false);
+		table.setBackground(new Color(227, 255, 235));
+
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"PUESTO", "NOMBRE", "FECHA SUBIDA", "VIDEO"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, String.class, String.class, Object.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
+		table.getColumnModel().getColumn(0).setPreferredWidth(59);
+		table.getColumnModel().getColumn(1).setPreferredWidth(201);
+		table.getColumnModel().getColumn(2).setPreferredWidth(153);
+		table.getColumnModel().getColumn(3).setPreferredWidth(100);
+		// Crear un DefaultTableCellRenderer personalizado para alinear el texto a la derecha en la columna 0
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+		table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+		table.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+
+		
+		// Obtener el renderizador de celdas por defecto
+		DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
+		// Asignar el renderizador personalizado a una columna específica (por ejemplo, la columna 1) y establecer el color de fondo deseado (por ejemplo, rojo)
+		int targetColumn = 0; // Columna a la que se le aplicará el color de fondo
+		Color backgroundColor = Color.green; // Color de fondo deseado
+		table.getColumnModel().getColumn(targetColumn).setCellRenderer(new ColumnBackgroundRenderer(targetColumn, backgroundColor));
+		
+		// Crear un renderizador personalizado para la columna de botones
+		TableCellRenderer buttonRenderer = new JTableButtonRenderer();
+		
+		//Cabeceras
+		Border emptyBorder = BorderFactory.createEmptyBorder();
+		table.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
+		    @Override
+		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+		        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+		        // Personalizar el estilo de las cabeceras de las columnas
+		        //c.setBackground(Color.green); // Cambiar el color de fondo
+		        //c.setForeground(Color.WHITE); // Cambiar el color del texto
+		     // Obtener la fuente actual del componente c
+		        Font currentFont = c.getFont();
+
+		        // Crear una nueva fuente con estilo de negrita
+		        Font newFont = new Font(currentFont.getFontName(), Font.BOLD, currentFont.getSize());
+
+		        // Establecer la nueva fuente en el componente c
+		        c.setFont(newFont);
+		        // Establecer la alineación centrada en el componente c
+		        ((DefaultTableCellRenderer) c).setHorizontalAlignment(SwingConstants.CENTER);
+		        
+		        return c;
+		    }
+		});
+		
+		scrollPane.setViewportView(table);
+		
+		
+		JButton btnVer = new JButton("Ver");
+		btnVer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				
+				String sProducto = "";
+				String sModelo = "";
+				int iRef = 0;
+				String sRef = "";
+				sProducto = cbProducto.getSelectedItem().toString();
+				sModelo = cbModelo.getSelectedItem().toString();
+				String sModel = cbModelo.getSelectedItem().toString();
+
+				ProductoDAO producDAO = new ProductoDAO();
+				iRef = producDAO.obtenerRef(sModel);
+				sRef = Integer.toString(iRef);
+				if (iRef == 0 && sProducto.equals("- Seleccione un producto -"))
+				{
+					JOptionPane.showMessageDialog(null,"Rellene alguna de las dos opciones:", "Error", JOptionPane.WARNING_MESSAGE);
+				}
+				else {						
+						rellenarVentana(iRef);
+						repaint();				
+				}
+			}	
+			
+		});
+		btnVer.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnVer.setBounds(106, 480, 131, 31);
+		contentPane.add(btnVer);
+		
+		JButton btnCerrar = new JButton("Cerrar");
+		btnCerrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				dispose();
+			}
+		});
+		btnCerrar.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnCerrar.setBounds(311, 480, 131, 31);
+		contentPane.add(btnCerrar);
+		
+		
+		//Boton ver referencia
+		JButton btnVerRef = new JButton("Ver");
+		btnVerRef.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String sProducto = "";
+				int iRef = 0;
+				String sRef ="";
+				sProducto = cbProducto.getSelectedItem().toString();
+				sRef = Integer.toString(iRef);
+				if (sRef.equals("") && sProducto.equals("- Seleccione un producto -"))
+				{
+					JOptionPane.showMessageDialog(null,"Rellene alguna de las dos opciones:", "Error", JOptionPane.WARNING_MESSAGE);
+				}
+				else {	
+					try {
+					    sRef = txtRef.getText(); // Obtener el valor del campo de texto como una cadena de caracteres
+					    iRef = Integer.parseInt(sRef); // Intentar convertir la cadena a un número entero
+					    rellenarVentana(iRef); // Realizar acciones con el número entero, ya que se ha ingresado un valor válido
+					    repaint(); // Repintar la ventana
+					} catch (NumberFormatException e1) {
+						JOptionPane.showMessageDialog(null,"Ingresa una Referencia válida", "Error", JOptionPane.WARNING_MESSAGE);
+
+					}
+								
+				}
+				
+			}
+		});
+		btnVerRef.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnVerRef.setBounds(106, 179, 131, 31);
+		contentPane.add(btnVerRef);
+		
+
+		
+	}
+	
+	//fUNCIÓN QUE RECIBE LA RUTA DEL VÍDEO Y LO REPRODUCE CON LA APP DE VIDEOS DEL ORDENADOR
+	public int AbrirVideo (String sRuta){
+	   
+	        String rutaVideo = sRuta;
+	        System.out.println(rutaVideo);
+	        int error=0;
+	        try {
+	            if (Desktop.isDesktopSupported()) {
+	                Desktop desktop = Desktop.getDesktop();
+	                File file = new File(rutaVideo);
+	                if (file.exists()) {
+	                    desktop.open(file); // Abrir el archivo con la aplicación predeterminada
+	                } else {
+	                    System.out.println("El archivo de video no existe.");
+	                    error=1;
+	                }
+	            } else {
+	                System.out.println("La funcionalidad de apertura de escritorio no es compatible en este sistema.");
+	                	error=2;
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    return error;
+	}
+	
+	private void rellenarVentana(int iRef) {
+		
+		DefaultTableModel modelo = (DefaultTableModel) table.getModel();//siempre
+		modelo.setRowCount(0);//a cero
+		String sRef = Integer.toString(iRef);
+		SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+		String sFecha;
+		int numeroPuestoAnterior = -1;//para que solo imprima 1 vez l puesto
+		
+		VideoDAO videoDAO = new VideoDAO();
+		ArrayList<Video> lista = new ArrayList<Video>();
+		
+		lista = videoDAO.obtenerVideos(iRef);//obtengo y luego recorro
+		txtRef.setText(sRef);
+		if (lista.isEmpty()) { // Verificar si la lista está vacía
+	        JOptionPane.showMessageDialog(null, "El producto no existe", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+	    } else {
+			for (Video vi : lista) {
+			    int totalFilas = modelo.getRowCount(); // Obtener el número total de filas en la tabla
+	
+				// Crear una instancia del renderizador personalizado
+				NombreVideoRenderer nombreVideoRenderer = new NombreVideoRenderer();
+	
+				// Asignar el renderizador a la columna del nombre del video (suponiendo que sea la columna 1)
+				table.getColumnModel().getColumn(1).setCellRenderer(nombreVideoRenderer);
+	
+				if (vi.getPuesto() != numeroPuestoAnterior) {
+					String puesto = "Puesto "+vi.getPuesto();
+			        Object file[] = {	  
+			            puesto,	
+			            vi.getNombre(),
+			            sFecha = formatoFecha.format(vi.getFecha_subida())
+			        };
+			        modelo.addRow(file);
+				} else {
+			        // Mostrar solo el nombre del video en filas consecutivas con el mismo número de puesto
+			        Object file[] = {
+			            "", // Espacio vacío en lugar del número de puesto
+			            vi.getNombre(),
+			            formatoFecha.format(vi.getFecha_subida()),
+			        };
+			        modelo.addRow(file);
+			    }
+			    numeroPuestoAnterior = vi.getPuesto();
+			}
+	    }
+		TableColumn button = table.getColumnModel().getColumn(3); // Obtener la columna de botones (índice 3)
+		button.setCellRenderer(new ButtonRenderer()); // Establecer el renderizador de la columna como ButtonRenderer
+		button.setCellEditor(new ButtonEditor(new JCheckBox())); // Establecer el editor de celdas de la columna como ButtonEditor
+
+	}
+	public class JTableButtonRenderer implements TableCellRenderer {
+	    @Override
+	    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+	        JButton button = (JButton) value;
+	        return button;
+	    }
+	}
+	public class ButtonRenderer extends JButton implements TableCellRenderer {
+	    public ButtonRenderer() {
+	        setOpaque(true);
+	    }
+
+	    public Component getTableCellRendererComponent(JTable table, Object value,
+	            boolean isSelected, boolean hasFocus, int row, int column) {
+	        setText("VÍDEO");
+	        return this;
+	    }
+	}
+
+	public class ButtonEditor extends DefaultCellEditor {
+	    protected JButton button;
+	    private JTable table; // Agrega una referencia a la tabla
+	    public ButtonEditor(JCheckBox checkBox) {
+	        super(checkBox);
+	        button = new JButton();
+	        button.setOpaque(true);
+	        button.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	            	 int row = table.getSelectedRow(); // Obtener el índice de la fila seleccionada en la tabla
+	            	    if (row >= 0) {
+	            	      String nombreVideo = (String) table.getValueAt(row, 1);
+	                AbrirVideo(nombreVideo);
+	            	    }
+	            }
+	        });
+        
+	    }
+
+	    public Component getTableCellEditorComponent(JTable table, Object value,
+	            boolean isSelected, int row, int column) {
+	    	//String imagePath = "/imagenes/flecha.png"; // Ruta de la imagen en disco
+	    	//ImageIcon imageIcon = new ImageIcon(getClass().getResource(imagePath)); // Cargar la imagen usando getResource()
+
+	    	// Establecer la imagen como icono del JButton
+	    	//button.setIcon(imageIcon);
+	    	button.setText("Reproduciendo...");
+	        this.table = table; // Asigna la referencia de la tabla a la variable local
+	        return button;
+	    }
+
+	    public Object getCellEditorValue() {
+	        return "";
+	    }
+	    
+	   
+	  
+
+	    public boolean stopCellEditing() {
+	        cancelCellEditing(); // Llama a cancelCellEditing() para cancelar la edición y restaurar la celda a su estado inicial
+	        return super.stopCellEditing();
+	    }
+	}
+	
+	// Crear una clase que implemente TableCellRenderer
+	public class NombreVideoRenderer extends DefaultTableCellRenderer {
+
+	    @Override
+	    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+	        // Obtener el valor real de la celda, que es la ruta completa del video
+	        String rutaCompleta = (String) value;
+
+	        // Obtener el nombre del video a partir de la ruta completa
+	        String nombreVideo = rutaCompleta.substring(rutaCompleta.lastIndexOf("\\") + 1);
+
+	        // Usar el nombre del video como valor a mostrar en la celda
+	        return super.getTableCellRendererComponent(table, nombreVideo, isSelected, hasFocus, row, column);
+	    }
+	}
+	
+	public class ColumnBackgroundRenderer extends DefaultTableCellRenderer {
+
+	    private int targetColumn;
+	    private Color backgroundColor;
+
+	    public ColumnBackgroundRenderer(int targetColumn, Color backgroundColor) {
+	        this.targetColumn = targetColumn;
+	        this.backgroundColor = backgroundColor;
+	    }
+
+	    @Override
+	    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+	        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+	        // Si la columna actual es la columna objetivo, establecer el color de fondo
+	        if (column == targetColumn) {
+	            c.setBackground(backgroundColor);
+	        } else {
+	            // Si no, establecer el color de fondo por defecto
+	            c.setBackground(table.getBackground());
+	        }
+
+	        return c;
+	    }
+	}
+}
