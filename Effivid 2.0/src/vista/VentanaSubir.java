@@ -242,7 +242,7 @@ String ruta = "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg -i \"" + destino.toString()
 Process process = Runtime.getRuntime().exec(cmd+ruta);
 //process.waitFor();
 						    System.out.println("VIDEO SUBIDO");
-						    sNombre = sNombreArchivoCompleto;
+						    sNombre = sNombreArchivoNuevo;
 							iRef_producto = Integer.parseInt(sRef_producto);
 							java.sql.Date fechaActual = new java.sql.Date(System.currentTimeMillis());
 
