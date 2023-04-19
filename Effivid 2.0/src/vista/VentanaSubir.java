@@ -250,6 +250,7 @@ try {
     while ((line = br.readLine()) != null) {
         System.out.println(line);
     }
+   
 } catch (IOException e1) {
     e1.printStackTrace();
 }
@@ -264,7 +265,16 @@ try {
 							if (iResultado == 0) {
 								JOptionPane.showMessageDialog(null, "No se ha podido insertar vídeo");
 							}
-								       
+							
+							//borrar archivo antiguo
+							String filePath = destino.toString();
+					        File file = new File(filePath);
+					        
+					        if (file.delete()) {
+					            System.out.println("El archivo se borró exitosamente.");
+					        } else {
+					            System.out.println("El archivo no se pudo borrar.");
+					        }
 						    dispose();
 						} 
 						catch (IOException e2) 

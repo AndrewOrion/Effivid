@@ -70,8 +70,8 @@ public class VentanaUsuario extends JFrame {
 			cbModelo.setBounds(109, 398, 377, 31);
 			cbModelo.setBackground(new Color(227, 255, 235));
 
-			cbModelo.addItem("- Seleccione el modelo -" );
-			
+			cbModelo.addItem("- Seleccione el modelo -");
+
 		//ASOCIAR ACTIONLISTENER AL COMBOBOX PRODUCTO
 			cbProducto.addActionListener(new ActionListener() 
 			{
@@ -81,7 +81,7 @@ public class VentanaUsuario extends JFrame {
 						
 		//VACIAR Y RELLENAR COMBOBOX MODELO
 				cbModelo.removeAllItems();
-				
+				cbModelo.addItem("- Seleccione el modelo -");
 				ArrayList<Producto> lista2 = new ArrayList<Producto>();
 				ProductoDAO producDAO = new ProductoDAO();
 				lista2 = producDAO.obtenerProductos(sDenominacion);
@@ -91,7 +91,7 @@ public class VentanaUsuario extends JFrame {
 					String descripcion = produc.getDescripcion();
 					cbModelo.addItem(descripcion);
 				}
-				cbModelo.setSelectedIndex(0);
+				cbModelo.setSelectedItem("- Seleccione el modelo -");
 				cbModelo.repaint();
 			}
 			});
@@ -411,7 +411,7 @@ public class VentanaUsuario extends JFrame {
 	                if (file.exists()) {
 	                    desktop.open(file); // Abrir el archivo con la aplicación predeterminada
 	                } else {
-	                    System.out.println("El archivo de video no existe.");
+						JOptionPane.showMessageDialog(null, "El vídeo no existe en la carpeta");
 	                    error=1;
 	                }
 	            } else {
