@@ -236,11 +236,23 @@ public class VentanaSubir extends JFrame {
 						    
 //String inputFilePath = archivoSeleccionado.getAbsolutePath();
 String sNombreArchivoNuevo = sDestino + sExtensionNueva;
-String cmd ="cmd.exe /c";
+String cmd ="cmd.exe /c ";
 String ruta = "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg -i \"" + destino.toString() + "\" -c:v libx264 -b:v 1.5M -c:a aac -b:a 128k \"" + sNombreArchivoNuevo + "\"";
 //System.out.println(cmd);
-Process process = Runtime.getRuntime().exec(cmd+ruta);
+//Process process = Runtime.getRuntime().exec(cmd+ruta);
 //process.waitFor();
+try {
+    ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "\"\"", "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg", "-i", destino.toString(), "-c:v", "libx264", "-b:v", "1.5M", "-c:a", "aac", "-b:a", "128k", sNombreArchivoNuevo);
+	pb.redirectErrorStream(true);
+    Process p = pb.start();
+    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+    String line;
+    while ((line = br.readLine()) != null) {
+        System.out.println(line);
+    }
+} catch (IOException e1) {
+    e1.printStackTrace();
+}
 						    System.out.println("VIDEO SUBIDO");
 						    sNombre = sNombreArchivoNuevo;
 							iRef_producto = Integer.parseInt(sRef_producto);
