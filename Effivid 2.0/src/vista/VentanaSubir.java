@@ -228,6 +228,7 @@ public class VentanaSubir extends JFrame {
 						sOrigen = textArchivo.getText();
 						sExtension = "." + archivoSeleccionado.getName().substring(archivoSeleccionado.getName().lastIndexOf(".") + 1);
 						String sExtensionNueva =".mp4";
+						
 						sNombreArchivoCompleto = sDestino + sExtension;
 		
 						// Copiar el archivo seleccionado a la nueva ubicación
@@ -241,26 +242,41 @@ public class VentanaSubir extends JFrame {
 
 						    Files.copy(fuente, destino, StandardCopyOption.REPLACE_EXISTING);
 						    
-//String inputFilePath = archivoSeleccionado.getAbsolutePath();
-String sNombreArchivoNuevo = sDestino + sExtensionNueva;
-String cmd ="cmd.exe /c ";
-String ruta = "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg -i \"" + destino.toString() + "\" -c:v libx264 -b:v 1.5M -c:a aac -b:a 128k \"" + sNombreArchivoNuevo + "\"";
-//System.out.println(cmd);
-//Process process = Runtime.getRuntime().exec(cmd+ruta);
-//process.waitFor();
-try {
-    ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "\"\"", "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg", "-i", destino.toString(), "-c:v", "libx264", "-b:v", "1.5M", "-c:a", "aac", "-b:a", "128k", sNombreArchivoNuevo);
-	pb.redirectErrorStream(true);
-    Process p = pb.start();
-    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-    String line;
-    while ((line = br.readLine()) != null) {
-        System.out.println(line);
-    }
-   
-} catch (IOException e1) {
-    e1.printStackTrace();
-}
+							//String inputFilePath = archivoSeleccionado.getAbsolutePath();
+						    String sNombreArchivoNuevo = sDestino + sExtensionNueva;
+						  
+							String cmd ="cmd.exe /c ";
+							String ruta = "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg -i \"" + destino.toString() + "\" -c:v libx264 -b:v 1.5M -c:a aac -b:a 128k \"" + sNombreArchivoNuevo + "\"";
+							//System.out.println(cmd);
+							//Process process = Runtime.getRuntime().exec(cmd+ruta);
+							//process.waitFor();
+							System.out.print(sExtension);
+							if (!sExtension.equalsIgnoreCase(".mp4")) {
+								try {
+								    ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "\"\"", "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg", "-i", destino.toString(), "-c:v", "libx264", "-b:v", "1.5M", "-c:a", "aac", "-b:a", "128k", sNombreArchivoNuevo);
+									pb.redirectErrorStream(true);
+								    Process p = pb.start();
+								    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+								    String line;
+								    while ((line = br.readLine()) != null) {
+								        System.out.println(line);
+								    }
+								   
+								} catch (IOException e1) {
+								    e1.printStackTrace();
+								}
+								//borrar archivo antiguo
+								String filePath = destino.toString();
+						        File file = new File(filePath);
+						        
+						        if (file.delete()) {
+						            System.out.println("El archivo anterior se borró exitosamente.");
+						        } else {
+						            System.out.println("El archivo no se pudo borrar.");
+						        }
+							}
+							dispose();
+							
 						    System.out.println("VIDEO SUBIDO");
 						    sNombre = sNombreArchivoNuevo;
 							iRef_producto = Integer.parseInt(sRef_producto);
@@ -273,17 +289,7 @@ try {
 								JOptionPane.showMessageDialog(null, "No se ha podido insertar vídeo");
 							}
 							
-							//borrar archivo antiguo
-							String filePath = destino.toString();
-					        File file = new File(filePath);
-					        
-					        if (file.delete()) {
-					            System.out.println("El archivo anterior se borró exitosamente.");
-					        } else {
-					            System.out.println("El archivo no se pudo borrar.");
-					        }
-
-						    dispose();
+							
 						} 
 						catch (IOException e2) 
 						{
