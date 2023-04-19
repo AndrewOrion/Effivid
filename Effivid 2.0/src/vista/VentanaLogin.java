@@ -79,10 +79,13 @@ public class VentanaLogin extends JFrame {
 					textUsuario.setText("");
 					textPassword.setText("");
 					VentanaUsuario frame = new VentanaUsuario();
+			        frame.setLocation(100, 40); // establecer la posición de la ventana
+
 					frame.setVisible(true);
 				}
 				else {
 					VentanaUsuario frame = new VentanaUsuario();
+			        frame.setLocation(100, 40); // establecer la posición de la ventana
 					frame.setVisible(true);
 				}
 			}

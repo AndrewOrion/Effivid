@@ -124,22 +124,22 @@ private ConexionBD conexion;
 			}
 			return lista2;	
 		}*/
-	/*
-	 public int insertarTransaccion(Transaccion transaccion) {
+	
+	 public int insertarVideo(Video video) {
 				// Obtenemos una conexion a la base de datos.
 				ConexionBD conexion = new ConexionBD(); 
 				Connection con = conexion.getConexion(); 
 				PreparedStatement consulta = null; 
-				String SQL = "INSERT INTO transacciones (fecha, cantidad, categoria, "
-						+ "tipo, descripcion) VALUES (?,?,?,?,?)";
+				String SQL = "INSERT INTO videos (codigo_video, nombre, ref_producto, "
+						+ "puesto, fecha_subida) VALUES (?,?,?,?,?)";
 				int resultado=0; 
 				try { 
 					consulta = con.prepareStatement(SQL); 
-					consulta.setDate(1, transaccion.getFecha());
-					consulta.setDouble(2, transaccion.getCantidad());
-					consulta.setString(3,  transaccion.getCategoria());
-					consulta.setString(4,  transaccion.getTipo());
-					consulta.setString(5,  transaccion.getDescripcion());
+					consulta.setInt(1, video.getCod_video());
+					consulta.setString(2, video.getNombre());
+					consulta.setInt(3, video.getRef_producto());
+					consulta.setInt(4, video.getPuesto());
+					consulta.setDate(5, video.getFecha_subida());
 					
 					resultado = consulta.executeUpdate(); 
 					
@@ -158,7 +158,7 @@ private ConexionBD conexion;
 					} 
 				} 
 			return resultado; 
-		}*/
+		}
 		
 		public int eliminarVideo (int codigo_video) { 
 			// Obtenemos una conexion a la base de datos. 

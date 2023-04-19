@@ -11,6 +11,8 @@ public class Principal {
 				public void run() {
 					try {
 						VentanaLogin frame = new VentanaLogin();
+						frame.setLocation(100, 30); // establecer la posición de la ventana
+
 						frame.setVisible(true);
 					} catch (Exception e) {
 						e.printStackTrace();

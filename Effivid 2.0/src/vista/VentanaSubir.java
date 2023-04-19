@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Image;
@@ -33,7 +34,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.io.*;
 
 import javax.swing.JFileChooser;
@@ -45,7 +51,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
-
+import modelo.Video;
+import dao.VideoDAO;
 
 public class VentanaSubir extends JFrame {
 
@@ -56,7 +63,7 @@ public class VentanaSubir extends JFrame {
 	private File archivoSeleccionado;
 	private File archivoDestino;
 	JSpinner spinnerPuesto = new JSpinner();
-
+	JLabel lblRef = new JLabel("");
 	public VentanaSubir(String sRef) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1039, 662);
@@ -129,44 +136,11 @@ public class VentanaSubir extends JFrame {
 		        if (iSeleccion == JFileChooser.APPROVE_OPTION) 
 		        {
 		        		archivoSeleccionado = ExploradorArchivos.getSelectedFile();
-			            System.out.println(archivoSeleccionado.getName());
+			            //System.out.println(archivoSeleccionado.getName());
 		        }
-		        
-	        // Si el archivo que deseamos copiar se encuentra en formato .AVI o .avi, se recogerá la ruta del archivo. En caso contrario 
-	        // se abrirá el programa seleccionado abajo para convertir previamente el video a formato .avi
-		        
-		        if (archivoSeleccionado.getName().contains(".AVI") || archivoSeleccionado.getName().contains(".avi"))
-	        	{
-	            	textArchivo.setText(archivoSeleccionado.getName());
-	        	}
-	            else
-	            {
-	            	
-	            	iRespuesta = JOptionPane.showConfirmDialog(null, "El vídeo seleccionado no está en formato .AVI ¿desea convertirlo?", "Advertencia", JOptionPane.YES_NO_OPTION);
-	            	if(iRespuesta == JOptionPane.YES_OPTION)
-	            	{
-	            		try 
-		            	{
-		/**
-		 * A continuación se muestra la ruta del programa necesario para la conversion y compresion de los videos (en nuestro caso FreeMake VC), que habra que descargar
-		 * y cambiar la ruta abajo indicada por la ruta en la que tengamos nuestro .exe (Se establece a la hora de instalar el programa descargado y recomendamos hacerlo
-		 * directamente en C:\\). Este programa puede ser sustituido por cualquier otro apto para cambiar formato de video.
-		 */
-	        		    String rutaApp = "C:\\Freemake\\Freemake Video Converter\\FreemakeVC.exe";
-	        		    Runtime.getRuntime().exec(rutaApp);
-	        		    
-		            	} 
-		            	catch (IOException e2) 
-		            	{
-		            		e2.printStackTrace();
-		            	}
-	            	}
-	            	else
-	            	{
-	            		dispose();
-	            	}
-	            }
-			        
+		                 
+		       textArchivo.setText(archivoSeleccionado.getName());
+	        
 			}
 		});
 		btnExplorar.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -217,52 +191,74 @@ public class VentanaSubir extends JFrame {
 		JProgressBar progressBar = new JProgressBar(0, 100);
 		progressBar.setStringPainted(true);
 		progressBar.setVisible(false);
-		btnGuardar.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent e) 
-			{
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				
 				String sExtension;
 				String sDestino;
 				String sNombreArchivoCompleto;
 				int iPuesto = (int) spinnerPuesto.getValue();
 				
-				if(textArchivo.getText().equals("") || textDestino.getText().equals(""))
-				{
+				if(textArchivo.getText().equals("") || textDestino.getText().equals("")){
+					
 					JOptionPane.showMessageDialog(null, "Seleccione archivo y destino", "Error", JOptionPane.WARNING_MESSAGE);
 				}
-				else if (textDestino.getText().equals(""))
-				{
+				else if (textDestino.getText().equals("")){
+					
 					JOptionPane.showMessageDialog(null, "Seleccione destino del archivo", "Error", JOptionPane.WARNING_MESSAGE);
 				}
-				else
-				{
-					sDestino = textDestino.getText();
-					sExtension = "." + archivoSeleccionado.getName().substring(archivoSeleccionado.getName().lastIndexOf(".") + 1);
-					sNombreArchivoCompleto = sDestino + sExtension;
+				else {
+					if (iPuesto!=0) {
+						String sNombre;
+						int iCodigo_video;
+						Date fecha;
+						int iRef_producto;	
+						int iResultado=0;
+						String sRef_producto = lblRef.getText();
+		
+						sDestino = textDestino.getText();
+						sExtension = "." + archivoSeleccionado.getName().substring(archivoSeleccionado.getName().lastIndexOf(".") + 1);
+						sNombreArchivoCompleto = sDestino + sExtension;
+		
+						// Copiar el archivo seleccionado a la nueva ubicación
+						try 
+						{
+							Path fuente = Paths.get(archivoSeleccionado.getAbsolutePath());
+							Path destino = Paths.get(sNombreArchivoCompleto);
+						      
+						    BarraProgreso ventana = new BarraProgreso(fuente, archivoSeleccionado, sNombreArchivoCompleto);
+						    ventana.setVisible(true);
+						    
+						    Files.copy(fuente, destino, StandardCopyOption.REPLACE_EXISTING);
+						    System.out.println("VIDEO SUBIDO");
+						    sNombre = sNombreArchivoCompleto;
+							iRef_producto = Integer.parseInt(sRef_producto);
+							java.sql.Date fechaActual = new java.sql.Date(System.currentTimeMillis());
 
-					System.out.println("La ruta completa del archivo es: " + sNombreArchivoCompleto);
-
-				// Copiar el archivo seleccionado a la nueva ubicación
-					try 
-					{
-						Path fuente = Paths.get(archivoSeleccionado.getAbsolutePath());
-						Path destino = Paths.get(sNombreArchivoCompleto);
-					      
-					    BarraProgreso ventana = new BarraProgreso(fuente, archivoSeleccionado, sNombreArchivoCompleto);
-					    ventana.setVisible(true);
-					    
-					    Files.copy(fuente, destino, StandardCopyOption.REPLACE_EXISTING);
-					    System.out.println("Archivo copiado.");
-					} 
-					catch (IOException e2) 
-					{
-					    System.out.println("Error al copiar el archivo: " + e2.getMessage());
-					} 
+							Video vi = new Video(sNombre,iRef_producto,iPuesto,fechaActual); 				
+							VideoDAO videoDAO = new VideoDAO();
+							iResultado = videoDAO.insertarVideo(vi);	
+							if (iResultado == 0) {
+								JOptionPane.showMessageDialog(null, "No se ha podido insertar vídeo");
+							}
+								       
+						    dispose();
+						} 
+						catch (IOException e2) 
+						{
+						    System.out.println("Error al copiar el archivo: " + e2.getMessage());
+						} 		
+					//	rellenarVentana();
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Seleccione el nº de puesto");
+					}
 				
+						
+					
 				}
-			
-				textArchivo.setText("");
-				textDestino.setText("");
+				//textArchivo.setText("");
+				//textDestino.setText("");
 			  
 			 }
 		});
@@ -286,7 +282,7 @@ public class VentanaSubir extends JFrame {
 		lblNewLabel_1.setBounds(84, 86, 136, 37);
 		contentPane.add(lblNewLabel_1);
 		
-		JLabel lblRef = new JLabel("");
+		
 		lblRef.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblRef.setBounds(205, 86, 83, 26);
 		lblRef.setText(sRef);

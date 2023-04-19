@@ -328,8 +328,13 @@ public class VentanaUsuario extends JFrame {
 		JButton btnAdd = new JButton("AÑADIR VÍDEO");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaSubir frame = new VentanaSubir(txtRef.getText());
-				frame.setVisible(true);
+				if (txtRef.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Seleccione Producto y puse VER");
+				}else {
+					VentanaSubir frame = new VentanaSubir(txtRef.getText());
+					frame.setVisible(true);
+				}
+				
 			}
 		});
 		btnAdd.setFont(new Font("Tahoma", Font.BOLD, 15));
