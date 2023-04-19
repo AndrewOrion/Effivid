@@ -64,6 +64,8 @@ public class VentanaSubir extends JFrame {
 	private File archivoDestino;
 	JSpinner spinnerPuesto = new JSpinner();
 	JLabel lblRef = new JLabel("");
+	private int control=0;
+	
 	public VentanaSubir(String sRef) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1039, 662);
@@ -137,9 +139,13 @@ public class VentanaSubir extends JFrame {
 		        {
 		        		archivoSeleccionado = ExploradorArchivos.getSelectedFile();
 			            //System.out.println(archivoSeleccionado.getName());
+		 		       textArchivo.setText(archivoSeleccionado.getName());
+
+		        }
+		        else if (iSeleccion == JFileChooser.CANCEL_OPTION) {
+		        		control = 1;
 		        }
 		                 
-		       textArchivo.setText(archivoSeleccionado.getName());
 	        
 			}
 		});
@@ -152,27 +158,27 @@ public class VentanaSubir extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				//GUARDADO DEL VIDEO SELECCIONADO
-			       
-		        JFileChooser ExploradorArchivos2 = new JFileChooser();
-		        int iSeleccionado;
-		        String ArchivoCopiado;
-		        
-		        ArchivoCopiado = textArchivo.getText();
-		        ArchivoCopiado = ArchivoCopiado.substring(0, ArchivoCopiado.length() - 4);
-		        
-		        // Seleccion de donde guardarlo
-		        ExploradorArchivos2.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		        
-		        FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("Archivos de video", "mp4", "avi", "mov", "wmv", "flv", "mkv");
-		        ExploradorArchivos2.setFileFilter(filtro2);
-		        
-		        //copiado del nombre del archivo anterior
-		        File archivo = new File(ArchivoCopiado);
-		        ExploradorArchivos2.setSelectedFile(archivo);
-		        
-		        // Explorador de archivos para guardar un archivo
-		        iSeleccionado = ExploradorArchivos2.showSaveDialog(null);
-		        
+			    if (control == 1) { 
+			        JFileChooser ExploradorArchivos2 = new JFileChooser();
+			        int iSeleccionado;
+			        String ArchivoCopiado;
+			        
+			        ArchivoCopiado = textArchivo.getText();
+			        ArchivoCopiado = ArchivoCopiado.substring(0, ArchivoCopiado.length() - 4);
+			        
+			        // Seleccion de donde guardarlo
+			        ExploradorArchivos2.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			        
+			        FileNameExtensionFilter filtro2 = new FileNameExtensionFilter("Archivos de video", "mp4", "avi", "mov", "wmv", "flv", "mkv");
+			        ExploradorArchivos2.setFileFilter(filtro2);
+			        
+			        //copiado del nombre del archivo anterior
+			        File archivo = new File(ArchivoCopiado);
+			        ExploradorArchivos2.setSelectedFile(archivo);
+			        
+			        // Explorador de archivos para guardar un archivo
+			        iSeleccionado = ExploradorArchivos2.showSaveDialog(null);
+			    
 		        // Una vez pulsado el boton de guardar se recoge la ruta absoluta del video
 		        if (iSeleccionado == JFileChooser.APPROVE_OPTION) 
 		        {
@@ -181,6 +187,7 @@ public class VentanaSubir extends JFrame {
 		            System.out.println("Archivo guardado como: " + archivoDestino.getAbsolutePath());
 		            textDestino.setText(archivoDestino.getAbsolutePath());
 		        }
+			    }
 			}
 		});
 		btnDestino.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -271,17 +278,17 @@ try {
 					        File file = new File(filePath);
 					        
 					        if (file.delete()) {
-					            System.out.println("El archivo se borró exitosamente.");
+					            System.out.println("El archivo anterior se borró exitosamente.");
 					        } else {
 					            System.out.println("El archivo no se pudo borrar.");
 					        }
+
 						    dispose();
 						} 
 						catch (IOException e2) 
 						{
 						    System.out.println("Error al copiar el archivo: " + e2.getMessage());
 						} 		
-					//	rellenarVentana();
  
 					}
 					else {

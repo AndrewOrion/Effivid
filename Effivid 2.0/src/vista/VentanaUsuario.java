@@ -20,6 +20,8 @@ import java.awt.event.ActionEvent;
 import dao.VideoDAO;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -427,9 +429,11 @@ public class VentanaUsuario extends JFrame {
 	}
 	
 	private void rellenarVentana(int iRef) {
-		
+		revalidate();
+		repaint();
 		DefaultTableModel modelo = (DefaultTableModel) table.getModel();//siempre
 		modelo.setRowCount(0);//a cero
+		
 		String sRef = Integer.toString(iRef);
 		SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 		String sFecha;
@@ -475,11 +479,13 @@ public class VentanaUsuario extends JFrame {
 			    }
 			    numeroPuestoAnterior = vi.getPuesto();
 			}
+			
+			TableColumn button = table.getColumnModel().getColumn(4); // Obtener la columna de botones (índice 3)
+			button.setCellRenderer(new ButtonRenderer()); // Establecer el renderizador de la columna como ButtonRenderer
+			button.setCellEditor(new ButtonEditor(new JCheckBox())); // Establecer el editor de celdas de la columna como ButtonEditor
+			
 	    }
-		TableColumn button = table.getColumnModel().getColumn(4); // Obtener la columna de botones (índice 3)
-		button.setCellRenderer(new ButtonRenderer()); // Establecer el renderizador de la columna como ButtonRenderer
-		button.setCellEditor(new ButtonEditor(new JCheckBox())); // Establecer el editor de celdas de la columna como ButtonEditor
-
+		
 	}
 	public class JTableButtonRenderer implements TableCellRenderer {
 	    @Override
@@ -496,6 +502,7 @@ public class VentanaUsuario extends JFrame {
 	    public Component getTableCellRendererComponent(JTable table, Object value,
 	            boolean isSelected, boolean hasFocus, int row, int column) {
 	        setText("VÍDEO");
+	    	
 	        return this;
 	    }
 	}
@@ -521,22 +528,20 @@ public class VentanaUsuario extends JFrame {
 
 	    public Component getTableCellEditorComponent(JTable table, Object value,
 	            boolean isSelected, int row, int column) {
-	    	//String imagePath = "/imagenes/flecha.png"; // Ruta de la imagen en disco
-	    	//ImageIcon imageIcon = new ImageIcon(getClass().getResource(imagePath)); // Cargar la imagen usando getResource()
-
-	    	// Establecer la imagen como icono del JButton
-	    	//button.setIcon(imageIcon);
-	    	button.setText("Reproduciendo...");
+	    	//button.setText("Reproduciendo...");
+	    	String imagePath = "/imagenes/play.jpg";
+	    	URL imageURL = getClass().getResource(imagePath);
+	    	ImageIcon icon = new ImageIcon(imageURL);
+	    	button.setIcon(icon);
 	        this.table = table; // Asigna la referencia de la tabla a la variable local
+	    	
 	        return button;
+
 	    }
 
 	    public Object getCellEditorValue() {
 	        return "";
 	    }
-	    
-	   
-	  
 
 	    public boolean stopCellEditing() {
 	        cancelCellEditing(); // Llama a cancelCellEditing() para cancelar la edición y restaurar la celda a su estado inicial
