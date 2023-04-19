@@ -459,7 +459,6 @@ public class VentanaUsuario extends JFrame {
 			            vi.getNombre(),
 			            sFecha = formatoFecha.format(vi.getFecha_subida())
 			        };
-		            System.out.print(codigo_video);
 
 			        modelo.addRow(file);
 				} else {

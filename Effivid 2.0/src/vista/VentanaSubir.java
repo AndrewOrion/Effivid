@@ -196,6 +196,7 @@ public class VentanaSubir extends JFrame {
 				
 				String sExtension;
 				String sDestino;
+				String sOrigen;
 				String sNombreArchivoCompleto;
 				int iPuesto = (int) spinnerPuesto.getValue();
 				
@@ -217,7 +218,9 @@ public class VentanaSubir extends JFrame {
 						String sRef_producto = lblRef.getText();
 		
 						sDestino = textDestino.getText();
+						sOrigen = textArchivo.getText();
 						sExtension = "." + archivoSeleccionado.getName().substring(archivoSeleccionado.getName().lastIndexOf(".") + 1);
+						String sExtensionNueva =".mp4";
 						sNombreArchivoCompleto = sDestino + sExtension;
 		
 						// Copiar el archivo seleccionado a la nueva ubicación
@@ -226,10 +229,18 @@ public class VentanaSubir extends JFrame {
 							Path fuente = Paths.get(archivoSeleccionado.getAbsolutePath());
 							Path destino = Paths.get(sNombreArchivoCompleto);
 						      
-						    BarraProgreso ventana = new BarraProgreso(fuente, archivoSeleccionado, sNombreArchivoCompleto);
-						    ventana.setVisible(true);
-						    
+						  /*  BarraProgreso ventana = new BarraProgreso(fuente, archivoSeleccionado, sNombreArchivoCompleto);
+						    ventana.setVisible(true);*/
+
 						    Files.copy(fuente, destino, StandardCopyOption.REPLACE_EXISTING);
+						    
+//String inputFilePath = archivoSeleccionado.getAbsolutePath();
+String sNombreArchivoNuevo = sDestino + sExtensionNueva;
+String cmd ="cmd.exe /c";
+String ruta = "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg -i \"" + destino.toString() + "\" -c:v libx264 -b:v 1.5M -c:a aac -b:a 128k \"" + sNombreArchivoNuevo + "\"";
+//System.out.println(cmd);
+Process process = Runtime.getRuntime().exec(cmd+ruta);
+//process.waitFor();
 						    System.out.println("VIDEO SUBIDO");
 						    sNombre = sNombreArchivoCompleto;
 							iRef_producto = Integer.parseInt(sRef_producto);
@@ -249,6 +260,7 @@ public class VentanaSubir extends JFrame {
 						    System.out.println("Error al copiar el archivo: " + e2.getMessage());
 						} 		
 					//	rellenarVentana();
+ 
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "Seleccione el nº de puesto");
