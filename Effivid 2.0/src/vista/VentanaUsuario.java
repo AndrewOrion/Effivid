@@ -81,7 +81,9 @@ public class VentanaUsuario extends JFrame {
 						
 		//VACIAR Y RELLENAR COMBOBOX MODELO
 				cbModelo.removeAllItems();
-				cbModelo.addItem("- Seleccione el modelo -");
+				if (cbProducto.getSelectedIndex()==0) {
+					cbModelo.addItem("- Seleccione el modelo -");
+				}
 				ArrayList<Producto> lista2 = new ArrayList<Producto>();
 				ProductoDAO producDAO = new ProductoDAO();
 				lista2 = producDAO.obtenerProductos(sDenominacion);
