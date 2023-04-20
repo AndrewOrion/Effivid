@@ -9,7 +9,7 @@ public class ConexionBD
 	// Parámetros de la conexión
 			private static String database="efficold";
 			private static String usuario="root";
-			private static String contraseña="";
+			private static String contraseña="1234";
 			private static String url="jdbc:mysql://localhost/"+database;
 
 			private Connection conexion = null;
