@@ -40,6 +40,8 @@ public class VentanaLogin extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1348, 772);
+	    setLocationRelativeTo(null); // Centra la ventana en la pantalla
+
 		getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();

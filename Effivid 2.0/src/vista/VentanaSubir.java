@@ -50,6 +50,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -73,6 +74,7 @@ public class VentanaSubir extends JFrame {
 		setBounds(100, 100, 1039, 662);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+	    setLocationRelativeTo(null); // Centra la ventana en la pantalla
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -248,8 +250,7 @@ public class VentanaSubir extends JFrame {
 							Path fuente = Paths.get(archivoSeleccionado.getAbsolutePath());
 							Path destino = Paths.get(sNombreArchivoCompleto);
 						      
-						  /*  BarraProgreso ventana = new BarraProgreso(fuente, archivoSeleccionado, sNombreArchivoCompleto);
-						    ventana.setVisible(true);*/
+							long size = Files.size(fuente);
 
 						    Files.copy(fuente, destino, StandardCopyOption.REPLACE_EXISTING);
 						    
@@ -259,18 +260,28 @@ public class VentanaSubir extends JFrame {
 							String cmd ="cmd.exe /c ";
 							String ruta = "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg -i \"" + destino.toString() + "\" -c:v libx264 -b:v 1.5M -c:a aac -b:a 128k \"" + sNombreArchivoNuevo + "\"";
 							
-							System.out.print(sExtension);
 							if (!sExtension.equalsIgnoreCase(".mp4")) {
 								try {
 								    ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "\"\"", "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg", "-i", destino.toString(), "-c:v", "libx264", "-b:v", "1.5M", "-c:a", "aac", "-b:a", "128k", sNombreArchivoNuevo);
 									pb.redirectErrorStream(true);
 								    Process p = pb.start();
 								    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+								    
 								    String line;
 								    while ((line = br.readLine()) != null) {
-								        System.out.println(line);
-								    }
-								   
+								    	 if (line.contains("time=")) {
+								                String[] parts = line.split("time=");
+								                String[] timeParts = parts[1].split("\\.");
+								                String[] hms = timeParts[0].split(":");
+								                int hours = Integer.parseInt(hms[0]);
+								                int minutes = Integer.parseInt(hms[1]);
+								                int seconds = Integer.parseInt(hms[2]);
+								                int totalSeconds = hours * 3600 + minutes * 60 + seconds;
+			   
+											    }
+											    
+								    	 }			    
+								
 								} catch (IOException e1) {
 								    e1.printStackTrace();
 								}

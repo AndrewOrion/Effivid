@@ -32,6 +32,13 @@ public class Video
 		this.puesto = puesto;
 		this.fecha_subida = fecha_subida;
 	}
+	
+	public Video(int cod_video, String nombre, int ref_producto) {
+		super();
+		this.cod_video = cod_video;
+		this.nombre = nombre;
+		this.ref_producto = ref_producto;
+	}
 
 	//Getters and setters
 	public int getCod_video() {

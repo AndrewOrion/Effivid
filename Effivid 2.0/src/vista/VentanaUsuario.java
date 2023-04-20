@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 
 import conexion.ConexionBD;
 import dao.ProductoDAO;
@@ -22,6 +23,8 @@ import dao.VideoDAO;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.swing.*;
 import java.awt.*;
@@ -111,6 +114,8 @@ public class VentanaUsuario extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setBackground(new Color(227, 255, 235));
+	    setLocationRelativeTo(null); // Centra la ventana en la pantalla
+
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
@@ -376,6 +381,19 @@ public class VentanaUsuario extends JFrame {
 					if (iRespuesta == 0)
 						{ //si usuario dice SI
 							if (iElemento >= 0) {
+								//borrar archivo fisicamente
+								int fila = table.getSelectedRow();
+								TableModel model = table.getModel();
+								String nombre = model.getValueAt(fila, 2).toString();
+								System.out.print(nombre);
+								//borrar archivo dificamente
+						        File file = new File(nombre);
+						        
+						        if (file.delete()) {
+						            System.out.println("El archivo anterior se borró exitosamente.");
+						        } else {
+						            System.out.println("El archivo no se pudo borrar.");
+						        }
 								codigo_video = (int) table.getValueAt(iElemento, 1); //cojo el id del elemento (fila 0)
 								VideoDAO videoDAO = new VideoDAO();
 											
@@ -383,7 +401,8 @@ public class VentanaUsuario extends JFrame {
 								String sRef = txtRef.getText();
 								int iRef = Integer.parseInt(sRef);
 								rellenarVentana(iRef);
-							
+								
+								
 								if (iResultado == 0) {
 									JOptionPane.showMessageDialog(null, "No se ha podido eliminar la fila");
 								}
@@ -466,7 +485,7 @@ public class VentanaUsuario extends JFrame {
 				// Crear una instancia del renderizador personalizado
 				NombreVideoRenderer nombreVideoRenderer = new NombreVideoRenderer();
 	
-				// Asignar el renderizador a la columna del nombre del video (suponiendo que sea la columna 1)
+				// Asignar el renderizador a la columna del nombre del video (suponiendo que sea la columna 2)
 				table.getColumnModel().getColumn(2).setCellRenderer(nombreVideoRenderer);
 				
 				if (vi.getPuesto() != numeroPuestoAnterior) {
