@@ -1,6 +1,7 @@
 package vista;
 
 import javax.swing.border.Border;
+import modelo.Persona;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +25,7 @@ import java.net.URL;
 
 import javax.swing.*;
 import java.awt.*;
-
+import dao.PersonaDAO;
 @SuppressWarnings("serial")
 public class VentanaUsuario extends JFrame {
 
@@ -37,7 +38,7 @@ public class VentanaUsuario extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaUsuario() 
+	public VentanaUsuario(String nombreUsuario) 
 	{
 		
 	this.conexion = new ConexionBD();
@@ -47,7 +48,10 @@ public class VentanaUsuario extends JFrame {
 			cbProducto.setFont(new Font("Tahoma", Font.BOLD, 15));
 			cbProducto.setBounds(109, 336, 377, 31);
 			cbProducto.setBackground(new Color(227, 255, 235));
-
+			PersonaDAO usuario = new PersonaDAO();
+			Persona user = usuario.obtenerNombre(nombreUsuario);
+			String bienvenido = user.getNombre();
+			String tipo = user.getTipo();
 			
 			ArrayList<Producto> lista = new ArrayList<Producto>();
 			
@@ -310,9 +314,13 @@ public class VentanaUsuario extends JFrame {
 		btnVerRef.setBounds(71, 210, 131, 31);
 		contentPane.add(btnVerRef);
 		
-		JLabel lblNewLabel_2 = new JLabel("Bienvenido");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_2.setBounds(25, 29, 94, 13);
+		
+		JLabel lblNewLabel_2 = new JLabel("<" + bienvenido + ">");
+		lblNewLabel_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2.setBackground(new Color(0, 57, 9));
+		lblNewLabel_2.setOpaque(true);
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_2.setBounds(25, 29, 263, 13);
 		contentPane.add(lblNewLabel_2);
 		
 		JLabel lblUsuario = new JLabel("");
@@ -321,82 +329,87 @@ public class VentanaUsuario extends JFrame {
 		contentPane.add(lblUsuario);
 		
 		
-		//if (usuario es admin)
-		JPanel panelAdmin = new JPanel();
-		panelAdmin.setBorder(null);
-		panelAdmin.setBackground(new Color(225, 255, 239));
-		panelAdmin.setBounds(10, 532, 469, 169);
-		contentPane.add(panelAdmin);
-		panelAdmin.setLayout(null);
-		
-		JButton btnAdd = new JButton("AÑADIR VÍDEO");
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (txtRef.getText().equals("")) {
-					JOptionPane.showMessageDialog(null, "Seleccione Producto y puse VER");
-				}else {
-					VentanaSubir frame = new VentanaSubir(txtRef.getText());
-					frame.setVisible(true);
+		if (tipo.equals("admin")) {
+			JPanel panelAdmin = new JPanel();
+			panelAdmin.setBorder(null);
+			panelAdmin.setBackground(new Color(225, 255, 239));
+			panelAdmin.setBounds(10, 532, 469, 169);
+			contentPane.add(panelAdmin);
+			panelAdmin.setLayout(null);
+			
+			JButton btnAdd = new JButton("AÑADIR VÍDEO");
+			btnAdd.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if (txtRef.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Seleccione Producto y puse VER");
+					}else {
+						VentanaSubir frame = new VentanaSubir(txtRef.getText());
+						frame.setVisible(true);
+					}			
 				}
-				
-			}
-		});
-		btnAdd.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnAdd.setBounds(28, 102, 169, 57);
-		panelAdmin.add(btnAdd);
-		
-		JButton btnEliminar = new JButton("ELIMINAR VÍDEO");
-		btnEliminar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int iElemento=-1;
-				int codigo_video;
-				int iResultado;
-				int iRespuesta;
-				
-				iElemento = table.getSelectedRow();
-				if (iElemento == -1) {
-					JOptionPane.showMessageDialog(null, "Ninguna fila seleccionada");
-				}
-				else {
-				iRespuesta = JOptionPane.showConfirmDialog(null, "¿Estás seguro?", "Eliminar", 
-						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				
-				if (iRespuesta == 0)
-					{ //si usuario dice SI
-						if (iElemento >= 0) {
-							codigo_video = (int) table.getValueAt(iElemento, 1); //cojo el id del elemento (fila 0)
-							VideoDAO videoDAO = new VideoDAO();
-										
-							iResultado = videoDAO.eliminarVideo(codigo_video);
-							String sRef = txtRef.getText();
-							int iRef = Integer.parseInt(sRef);
-							rellenarVentana(iRef);
+			});
+			btnAdd.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnAdd.setBounds(28, 102, 169, 57);
+			panelAdmin.add(btnAdd);
+			
+			JButton btnEliminar = new JButton("ELIMINAR VÍDEO");
+			btnEliminar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					int iElemento=-1;
+					int codigo_video;
+					int iResultado;
+					int iRespuesta;
+					
+					iElemento = table.getSelectedRow();
+					if (iElemento == -1) {
+						JOptionPane.showMessageDialog(null, "Ninguna fila seleccionada");
+					}
+					else {
+						String iconoRuta = "/imagenes/borrar.png";
+						URL urlImagen = getClass().getResource(iconoRuta);
+						ImageIcon icono = new ImageIcon(urlImagen);
+	
 						
-							if (iResultado == 0) {
-								JOptionPane.showMessageDialog(null, "No se ha podido eliminar la fila");
+					iRespuesta = JOptionPane.showConfirmDialog(null, "¿Estás seguro?", "Eliminar", 
+							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icono);
+					
+					if (iRespuesta == 0)
+						{ //si usuario dice SI
+							if (iElemento >= 0) {
+								codigo_video = (int) table.getValueAt(iElemento, 1); //cojo el id del elemento (fila 0)
+								VideoDAO videoDAO = new VideoDAO();
+											
+								iResultado = videoDAO.eliminarVideo(codigo_video);
+								String sRef = txtRef.getText();
+								int iRef = Integer.parseInt(sRef);
+								rellenarVentana(iRef);
+							
+								if (iResultado == 0) {
+									JOptionPane.showMessageDialog(null, "No se ha podido eliminar la fila");
+								}
 							}
 						}
 					}
 				}
-			}
-		});
-		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnEliminar.setBounds(246, 102, 183, 57);
-		panelAdmin.add(btnEliminar);
-		
-		JLabel lblNewLabel_3 = new JLabel("Opciones de administrador:");
-		lblNewLabel_3.setOpaque(true);
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_3.setBackground(new Color(128, 255, 128));
-		lblNewLabel_3.setBounds(112, 49, 221, 26);
-		panelAdmin.add(lblNewLabel_3);
-		
-		JLabel lblO_1 = new JLabel("________________________________________________________________");
-		lblO_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblO_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblO_1.setBounds(10, 0, 461, 20);
-		panelAdmin.add(lblO_1);
+			});
+			btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnEliminar.setBounds(246, 102, 183, 57);
+			panelAdmin.add(btnEliminar);
+			
+			JLabel lblNewLabel_3 = new JLabel("Opciones de administrador:");
+			lblNewLabel_3.setOpaque(true);
+			lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 15));
+			lblNewLabel_3.setBackground(new Color(128, 255, 128));
+			lblNewLabel_3.setBounds(112, 49, 221, 26);
+			panelAdmin.add(lblNewLabel_3);
+			
+			JLabel lblO_1 = new JLabel("________________________________________________________________");
+			lblO_1.setHorizontalAlignment(SwingConstants.RIGHT);
+			lblO_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			lblO_1.setBounds(10, 0, 461, 20);
+			panelAdmin.add(lblO_1);
+		}
 		//end panel admin
 
 		

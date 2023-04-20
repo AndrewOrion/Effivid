@@ -46,6 +46,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -121,16 +123,24 @@ public class VentanaSubir extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				//SELECCIONAR VIDEO A INSERTAR
-								
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+						| UnsupportedLookAndFeelException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}		
 				int iSeleccion;
 				int iRespuesta;
 				
 		        JFileChooser ExploradorArchivos = new JFileChooser();
+		        ExploradorArchivos.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+
 		        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de video", "mp4", "avi", "mov", "wmv", "flv","mkv");
 		        
 		        ExploradorArchivos.setFileFilter(filtro);
 		        
-		        
+		     
 		        // Explorador de archivos para seleccionar un video
 		        iSeleccion = ExploradorArchivos.showOpenDialog(null);
 		        
@@ -157,7 +167,7 @@ public class VentanaSubir extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				//GUARDADO DEL VIDEO SELECCIONADO
-			        JFileChooser ExploradorArchivos2 = new JFileChooser();
+			        JFileChooser ExploradorArchivos2 = new JFileChooser("c:\\videos\\");
 
 			        int iSeleccionado;
 			        String ArchivoCopiado;
@@ -248,9 +258,7 @@ public class VentanaSubir extends JFrame {
 						  
 							String cmd ="cmd.exe /c ";
 							String ruta = "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg -i \"" + destino.toString() + "\" -c:v libx264 -b:v 1.5M -c:a aac -b:a 128k \"" + sNombreArchivoNuevo + "\"";
-							//System.out.println(cmd);
-							//Process process = Runtime.getRuntime().exec(cmd+ruta);
-							//process.waitFor();
+							
 							System.out.print(sExtension);
 							if (!sExtension.equalsIgnoreCase(".mp4")) {
 								try {

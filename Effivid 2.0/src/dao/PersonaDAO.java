@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,9 +44,12 @@ private ConexionBD conexion;
 					int cod_empleado = resultado.getInt("cod_empleado");
 					String sNombre = resultado.getString("nombre");
 					String sTipo = resultado.getString("tipo");
+					int iContrasena = resultado.getInt("contrasena");
+					String sUsuario = resultado.getString("usuario");
 					
 					
-					Persona pers = new Persona(iId, cod_empleado, sNombre,sTipo);
+					
+					Persona pers = new Persona(iId, cod_empleado, sNombre,sTipo, iContrasena, sUsuario);
 					lista.add(pers);
 				}
 			}
@@ -72,7 +76,7 @@ private ConexionBD conexion;
 		
 	//*******************************************************************************************
 		//FUNCIÓN QUE DEVUELVE UN ELEMENTO PEDIDO (1 persona)
-		public Persona obtenerPersona(int cod_empleado)
+		public Persona obtenerPersona(String usuario, int contrasena)
 		{
 			Connection con = conexion.getConexion();
 			PreparedStatement consulta = null;
@@ -82,20 +86,21 @@ private ConexionBD conexion;
 			String sSQL;
 			try
 			{
-				sSQL = "SELECT * FROM personal where cod_empleado = ?";
+				sSQL = "SELECT * FROM personal where contrasena = ? AND usuario = ?";
 				consulta = con.prepareStatement(sSQL);
-				consulta.setInt(1, cod_empleado);
+				consulta.setInt(1, contrasena);
+				consulta.setString(2, usuario);
 				resultado = consulta.executeQuery();
 				
 				//Sólo puede devolver una fila si la hay
 				if(resultado.next())
 				{
 					int iId = resultado.getInt("id");
+					int iCod_empleado = resultado.getInt("cod_empleado");
 					String sNombre = resultado.getString("nombre");
 					String sTipo = resultado.getString("tipo");
 					
-					
-					persona = new Persona(iId, cod_empleado, sNombre, sTipo);
+					persona = new Persona(iId, iCod_empleado, sNombre, sTipo, contrasena, usuario);
 				}
 			}
 			catch (SQLException e)
@@ -104,18 +109,104 @@ private ConexionBD conexion;
 			}
 			finally
 			{
-				try
-				{
-					resultado.close();
-					consulta.close();
-					conexion.desconectar();
-				}
-				catch (SQLException e)
-				{
-					System.out.println("Error al liberar recursos: " + e.getMessage());
-				}
+			    try
+			    {
+			        if (resultado != null) resultado.close();
+			        if (consulta != null) consulta.close();
+			        conexion.desconectar();
+			    }
+			    catch (SQLException e)
+			    {
+			        System.out.println("Error al liberar recursos: " + e.getMessage());
+			    }
 			}
 			return persona;
 		}
+		
+		// **********************************************************************************************
+		// FUNCIÓN VALIDAR LOGIN
+		public boolean validarLogin(int contrasena, String usuario) {
+			
+			Connection con = conexion.getConexion();
+		    PreparedStatement statement = null;
+		    ResultSet resultado = null;
+
+		    try 
+		    {
+		        String query = "SELECT * FROM personal WHERE usuario = ? AND contrasena = ?";
+		        statement = con.prepareStatement(query);
+		        statement.setString(1, usuario);
+		        statement.setInt(2, contrasena);
+		        resultado = statement.executeQuery();
+		        return resultado.next(); // Devuelve TRUE si la consulta devuelve resultados, FALSE en caso contrario.    
+		    }
+		    catch (SQLException e)
+			{
+				System.out.println("Error al realizar la consulta: " + e.getMessage());
+			}
+			finally
+			{
+			    try
+			    {
+			        if (resultado != null) resultado.close();
+			        if (statement != null) statement.close();
+			        conexion.desconectar();
+			    }
+			    catch (SQLException e)
+			    {
+			        System.out.println("Error al liberar recursos: " + e.getMessage());
+			    }
+			}
+			return false;
+		}
+		
+		//DEVOLVER NOMBRE COMPLETO USUARIO
+		//FUNCIÓN QUE DEVUELVE UN ELEMENTO PEDIDO (1 persona)
+				public Persona obtenerNombre(String usuario)
+				{
+					Connection con = conexion.getConexion();
+					PreparedStatement consulta = null;
+					ResultSet resultado = null;
+					Persona persona = null;
+					
+					String sSQL;
+					try
+					{
+						sSQL = "SELECT * FROM personal where usuario = ?";
+						consulta = con.prepareStatement(sSQL);
+						consulta.setString(1, usuario);
+						resultado = consulta.executeQuery();
+						
+						//Sólo puede devolver una fila si la hay
+						if(resultado.next())
+						{
+							int iId = resultado.getInt("id");
+							int iCod_empleado = resultado.getInt("cod_empleado");
+							String sNombre = resultado.getString("nombre");
+							String sTipo = resultado.getString("tipo");
+							int contrasena = resultado.getInt("contrasena");
+							persona = new Persona(iId, iCod_empleado, sNombre, sTipo, contrasena, usuario);
+						}
+					}
+					catch (SQLException e)
+					{
+						System.out.println("Error al realizar la consulta: " + e.getMessage());
+					}
+					finally
+					{
+					    try
+					    {
+					        if (resultado != null) resultado.close();
+					        if (consulta != null) consulta.close();
+					        conexion.desconectar();
+					    }
+					    catch (SQLException e)
+					    {
+					        System.out.println("Error al liberar recursos: " + e.getMessage());
+					    }
+					}
+					return persona;
+				}
+				
 		
 }
