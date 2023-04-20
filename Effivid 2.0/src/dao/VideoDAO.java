@@ -4,6 +4,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,11 +36,10 @@ private ConexionBD conexion;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Video> lista = new ArrayList<Video>();
-		String sSQL;
-		
+		String sSQL;	
 		try
 		{
-			sSQL = "SELECT nombre FROM videos WHERE ref_producto = ? ORDER BY nombre ASC;";
+			sSQL = "SELECT puesto, nombre, fecha_subida FROM videos WHERE ref_producto = ? ORDER BY puesto ASC;";
 			pstmt = con.prepareStatement(sSQL);
 			pstmt.setInt(1, Ref);
 			rs = pstmt.executeQuery();
@@ -47,10 +47,12 @@ private ConexionBD conexion;
 			//Bucle para recorrer las filas que devuelve la consulta
 			while(rs.next())
 			{
-				int iCod_video = rs.getInt("codigo_video");
+			//	int iCod_video = rs.getInt("codigo_video");
+				int iPuesto = rs.getInt("puesto");
 				String sNombre = rs.getString("nombre");
-								
-				Video vid = new Video(iCod_video, sNombre, Ref);
+				Date fechaActual = rs.getDate("fecha_subida");
+
+				Video vid = new Video(sNombre, Ref, iPuesto, fechaActual);
 				lista.add(vid);
 			}
 		}
