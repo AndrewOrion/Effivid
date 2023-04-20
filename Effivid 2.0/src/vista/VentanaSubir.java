@@ -142,9 +142,8 @@ public class VentanaSubir extends JFrame {
 		 		       textArchivo.setText(archivoSeleccionado.getName());
 
 		        }
-		        else if (iSeleccion == JFileChooser.CANCEL_OPTION) {
-		        		control = 1;
-		        }
+		       /* else if (iSeleccion == JFileChooser.CANCEL_OPTION) {
+		        }*/
 		                 
 	        
 			}
@@ -158,13 +157,15 @@ public class VentanaSubir extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				//GUARDADO DEL VIDEO SELECCIONADO
-			    if (control == 1) { 
 			        JFileChooser ExploradorArchivos2 = new JFileChooser();
+
 			        int iSeleccionado;
 			        String ArchivoCopiado;
 			        
 			        ArchivoCopiado = textArchivo.getText();
-			        ArchivoCopiado = ArchivoCopiado.substring(0, ArchivoCopiado.length() - 4);
+			        if (ArchivoCopiado.length() >= 4) {
+			            ArchivoCopiado = ArchivoCopiado.substring(0, ArchivoCopiado.length() - 4);
+			        }
 			        
 			        // Seleccion de donde guardarlo
 			        ExploradorArchivos2.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -188,7 +189,7 @@ public class VentanaSubir extends JFrame {
 		            textDestino.setText(archivoDestino.getAbsolutePath());
 		        }
 			    }
-			}
+			
 		});
 		btnDestino.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnDestino.setBounds(549, 457, 93, 29);
