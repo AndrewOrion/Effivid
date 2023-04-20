@@ -386,7 +386,7 @@ public class VentanaUsuario extends JFrame {
 								TableModel model = table.getModel();
 								String nombre = model.getValueAt(fila, 2).toString();
 								System.out.print(nombre);
-								//borrar archivo dificamente
+								//borrar archivo fisicamente
 						        File file = new File(nombre);
 						        
 						        if (file.delete()) {
