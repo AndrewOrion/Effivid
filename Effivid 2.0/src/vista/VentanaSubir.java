@@ -56,6 +56,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import modelo.Video;
 import dao.VideoDAO;
+import java.awt.Color;
+import javax.swing.ImageIcon;
 
 public class VentanaSubir extends JFrame {
 
@@ -70,9 +72,11 @@ public class VentanaSubir extends JFrame {
 	private int control=0;
 	
 	public VentanaSubir(String sRef) {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1039, 662);
+		setBounds(100, 100, 690, 422);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(204, 255, 204));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 	    setLocationRelativeTo(null); // Centra la ventana en la pantalla
 
@@ -82,53 +86,58 @@ public class VentanaSubir extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Seleccione el vídeo:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setBounds(84, 351, 169, 29);
+		lblNewLabel.setBounds(117, 163, 130, 29);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblArchivo = new JLabel("Archivo:");
 		lblArchivo.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblArchivo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblArchivo.setBounds(84, 390, 64, 29);
+		lblArchivo.setBounds(117, 202, 64, 29);
 		contentPane.add(lblArchivo);
 		
 		textArchivo = new JTextField();
 		textArchivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		textArchivo.setBounds(158, 392, 374, 26);
+		textArchivo.setBounds(191, 202, 358, 26);
 		contentPane.add(textArchivo);
 		textArchivo.setColumns(10);
 		
 		JLabel lblDestino = new JLabel("Destino:");
 		lblDestino.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDestino.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDestino.setBounds(84, 457, 64, 29);
+		lblDestino.setBounds(117, 253, 64, 29);
 		contentPane.add(lblDestino);
 		
 		textDestino = new JTextField();
 		textDestino.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textDestino.setColumns(10);
-		textDestino.setBounds(158, 459, 374, 26);
+		textDestino.setBounds(191, 255, 358, 26);
 		contentPane.add(textDestino);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
+		btnCancelar.addActionListener(new ActionListener() 
+		{
 			public void actionPerformed(ActionEvent e) 
 			{
 				dispose();
 			}
 		});
 		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnCancelar.setBounds(526, 550, 116, 29);
+		btnCancelar.setBounds(536, 323, 116, 29);
 		contentPane.add(btnCancelar);
 		
 		JButton btnExplorar = new JButton("Explorar");
-		btnExplorar.addActionListener(new ActionListener() {
+		btnExplorar.addActionListener(new ActionListener() 
+		{
 			public void actionPerformed(ActionEvent e) 
 			{
 				//SELECCIONAR VIDEO A INSERTAR
-				try {
+				try 
+				{
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-						| UnsupportedLookAndFeelException e1) {
+				} 
+				catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+						| UnsupportedLookAndFeelException e1) 
+				{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}		
@@ -156,16 +165,15 @@ public class VentanaSubir extends JFrame {
 		        }
 		       /* else if (iSeleccion == JFileChooser.CANCEL_OPTION) {
 		        }*/
-		                 
-	        
 			}
 		});
 		btnExplorar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnExplorar.setBounds(549, 390, 93, 29);
+		btnExplorar.setBounds(559, 202, 93, 29);
 		contentPane.add(btnExplorar);
 		
 		JButton btnDestino = new JButton("Destino");
-		btnDestino.addActionListener(new ActionListener() {
+		btnDestino.addActionListener(new ActionListener()
+		{
 			public void actionPerformed(ActionEvent e) 
 			{
 				//GUARDADO DEL VIDEO SELECCIONADO
@@ -200,36 +208,39 @@ public class VentanaSubir extends JFrame {
 		            System.out.println("Archivo guardado como: " + archivoDestino.getAbsolutePath());
 		            textDestino.setText(archivoDestino.getAbsolutePath());
 		        }
-			    }
-			
+			 }
 		});
 		btnDestino.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnDestino.setBounds(549, 457, 93, 29);
+		btnDestino.setBounds(559, 253, 93, 29);
 		contentPane.add(btnDestino);
 		
 		JButton btnGuardar = new JButton("Guardar");
 		JProgressBar progressBar = new JProgressBar(0, 100);
 		progressBar.setStringPainted(true);
 		progressBar.setVisible(false);
-		btnGuardar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){
-				
+		btnGuardar.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 				String sExtension;
 				String sDestino;
 				String sOrigen;
 				String sNombreArchivoCompleto;
 				int iPuesto = (int) spinnerPuesto.getValue();
 				
-				if(textArchivo.getText().equals("") || textDestino.getText().equals("")){
-					
+				if(textArchivo.getText().equals("") || textDestino.getText().equals(""))
+				{
 					JOptionPane.showMessageDialog(null, "Seleccione archivo y destino", "Error", JOptionPane.WARNING_MESSAGE);
 				}
-				else if (textDestino.getText().equals("")){
+				else if (textDestino.getText().equals(""))
+				{
 					
 					JOptionPane.showMessageDialog(null, "Seleccione destino del archivo", "Error", JOptionPane.WARNING_MESSAGE);
 				}
-				else {
-					if (iPuesto!=0) {
+				else 
+				{
+					if (iPuesto!=0) 
+					{
 						String sNombre;
 						int iCodigo_video;
 						Date fecha;
@@ -260,38 +271,47 @@ public class VentanaSubir extends JFrame {
 							String cmd ="cmd.exe /c ";
 							String ruta = "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg -i \"" + destino.toString() + "\" -c:v libx264 -b:v 1.5M -c:a aac -b:a 128k \"" + sNombreArchivoNuevo + "\"";
 							
-							if (!sExtension.equalsIgnoreCase(".mp4")) {
-								try {
+							if (!sExtension.equalsIgnoreCase(".mp4")) 
+							{
+								try 
+								{
 								    ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "\"\"", "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg", "-i", destino.toString(), "-c:v", "libx264", "-b:v", "1.5M", "-c:a", "aac", "-b:a", "128k", sNombreArchivoNuevo);
 									pb.redirectErrorStream(true);
 								    Process p = pb.start();
 								    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 								    
 								    String line;
-								    while ((line = br.readLine()) != null) {
-								    	 if (line.contains("time=")) {
-								                String[] parts = line.split("time=");
-								                String[] timeParts = parts[1].split("\\.");
-								                String[] hms = timeParts[0].split(":");
-								                int hours = Integer.parseInt(hms[0]);
-								                int minutes = Integer.parseInt(hms[1]);
-								                int seconds = Integer.parseInt(hms[2]);
-								                int totalSeconds = hours * 3600 + minutes * 60 + seconds;
+								    while ((line = br.readLine()) != null) 
+								    {
+								    	 if (line.contains("time=")) 
+								    	 {
+							                String[] parts = line.split("time=");
+							                String[] timeParts = parts[1].split("\\.");
+							                String[] hms = timeParts[0].split(":");
+							                int hours = Integer.parseInt(hms[0]);
+							                int minutes = Integer.parseInt(hms[1]);
+							                int seconds = Integer.parseInt(hms[2]);
+							                int totalSeconds = hours * 3600 + minutes * 60 + seconds;
 			   
-											    }
+								    	 }
 											    
-								    	 }			    
+								    }			    
 								
-								} catch (IOException e1) {
+								} 
+								catch (IOException e1) 
+								{
 								    e1.printStackTrace();
 								}
 								//borrar archivo antiguo
 								String filePath = destino.toString();
 						        File file = new File(filePath);
 						        
-						        if (file.delete()) {
+						        if (file.delete()) 
+						        {
 						            System.out.println("El archivo anterior se borró exitosamente.");
-						        } else {
+						        } 
+						        else 
+						        {
 						            System.out.println("El archivo no se pudo borrar.");
 						        }
 							}
@@ -305,11 +325,10 @@ public class VentanaSubir extends JFrame {
 							Video vi = new Video(sNombre,iRef_producto,iPuesto,fechaActual); 				
 							VideoDAO videoDAO = new VideoDAO();
 							iResultado = videoDAO.insertarVideo(vi);	
-							if (iResultado == 0) {
+							if (iResultado == 0) 
+							{
 								JOptionPane.showMessageDialog(null, "No se ha podido insertar vídeo");
 							}
-							
-							
 						} 
 						catch (IOException e2) 
 						{
@@ -317,43 +336,52 @@ public class VentanaSubir extends JFrame {
 						} 		
  
 					}
-					else {
+					else 
+					{
 						JOptionPane.showMessageDialog(null, "Seleccione el nº de puesto");
 					}
-				
-						
-					
 				}
 				//textArchivo.setText("");
 				//textDestino.setText("");
-			  
 			 }
 		});
 		btnGuardar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnGuardar.setBounds(355, 550, 116, 29);
+		btnGuardar.setBounds(397, 323, 116, 29);
 		contentPane.add(btnGuardar);
 		
 		JLabel lblPuesto = new JLabel("Puesto nº:");
-		lblPuesto.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPuesto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPuesto.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblPuesto.setBounds(84, 259, 97, 29);
+		lblPuesto.setBounds(117, 110, 97, 29);
 		contentPane.add(lblPuesto);
 		
 		
 		spinnerPuesto.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		spinnerPuesto.setBounds(204, 260, 50, 27);
+		spinnerPuesto.setBounds(232, 111, 50, 27);
 		contentPane.add(spinnerPuesto);
 		
 		JLabel lblNewLabel_1 = new JLabel("REFERENCIA:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_1.setBounds(84, 86, 136, 37);
+		lblNewLabel_1.setBounds(117, 52, 114, 37);
 		contentPane.add(lblNewLabel_1);
 		
 		
 		lblRef.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblRef.setBounds(205, 86, 83, 26);
+		lblRef.setBounds(232, 57, 83, 26);
 		lblRef.setText(sRef);
 		contentPane.add(lblRef);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(0, 153, 0));
+		panel.setBounds(0, 0, 85, 396);
+		contentPane.add(panel);
+		
+		JLabel lblNewLabel_2 = new JLabel("EFFIVID");
+		lblNewLabel_2.setForeground(new Color(0, 153, 0));
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblNewLabel_2.setBackground(Color.WHITE);
+		lblNewLabel_2.setBounds(397, 21, 175, 78);
+		contentPane.add(lblNewLabel_2);
 	
 	}
 }

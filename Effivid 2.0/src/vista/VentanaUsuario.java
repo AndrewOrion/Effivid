@@ -43,13 +43,14 @@ public class VentanaUsuario extends JFrame {
 	 */
 	public VentanaUsuario(String nombreUsuario) 
 	{
+		setResizable(false);
 		
 	this.conexion = new ConexionBD();
 		
 	//DEFINIR COMBOBOX PRODUCTO
 			JComboBox<String> cbProducto = new JComboBox<String>();
 			cbProducto.setFont(new Font("Tahoma", Font.BOLD, 15));
-			cbProducto.setBounds(109, 336, 377, 31);
+			cbProducto.setBounds(189, 336, 297, 31);
 			cbProducto.setBackground(new Color(227, 255, 235));
 			PersonaDAO usuario = new PersonaDAO();
 			Persona user = usuario.obtenerNombre(nombreUsuario);
@@ -76,7 +77,7 @@ public class VentanaUsuario extends JFrame {
 			JComboBox<String> cbModelo = new JComboBox<String>();
 			
 			cbModelo.setFont(new Font("Tahoma", Font.BOLD, 15));
-			cbModelo.setBounds(109, 398, 377, 31);
+			cbModelo.setBounds(189, 398, 297, 31);
 			cbModelo.setBackground(new Color(227, 255, 235));
 
 			cbModelo.addItem("- Seleccione el modelo -");
@@ -123,43 +124,38 @@ public class VentanaUsuario extends JFrame {
 		txtRef = new JTextField();
 		txtRef.setToolTipText("Inserte el número de referencia del producto sobre el que desee ver el vídeo");
 		txtRef.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		txtRef.setBounds(148, 143, 338, 31);
+		txtRef.setBounds(223, 136, 249, 31);
 		contentPane.add(txtRef);
 		txtRef.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Nº Referencia:");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel.setBounds(10, 147, 114, 20);
+		lblNewLabel.setBounds(99, 140, 114, 20);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblO = new JLabel("________________________________________________________________");
-		lblO.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblO.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblO.setBounds(27, 272, 461, 20);
-		contentPane.add(lblO);
-		
 		JLabel lblProducto = new JLabel("Producto:");
-		lblProducto.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblProducto.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblProducto.setBounds(0, 341, 99, 20);
+		lblProducto.setBounds(88, 341, 76, 20);
 		contentPane.add(lblProducto);
 		
 		JLabel lblModelo = new JLabel("Modelo:");
-		lblModelo.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblModelo.setHorizontalAlignment(SwingConstants.LEFT);
 		lblModelo.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblModelo.setBounds(8, 403, 91, 20);
+		lblModelo.setBounds(88, 403, 70, 20);
 		contentPane.add(lblModelo);
 		
 		contentPane.add(cbProducto);
 		contentPane.add(cbModelo);
 		
 		JLabel lblNewLabel_1 = new JLabel("OPCIONES PARA BUSCAR:");
-		lblNewLabel_1.setBackground(new Color(128, 255, 128));
+		lblNewLabel_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1.setBackground(new Color(0, 153, 0));
 		lblNewLabel_1.setOpaque(true);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(70, 63, 358, 31);
+		lblNewLabel_1.setBounds(103, 64, 341, 31);
 		contentPane.add(lblNewLabel_1);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -274,7 +270,7 @@ public class VentanaUsuario extends JFrame {
 			
 		});
 		btnVer.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnVer.setBounds(71, 480, 131, 31);
+		btnVer.setBounds(189, 468, 131, 31);
 		contentPane.add(btnVer);
 		
 		JButton btnCerrar = new JButton("Cerrar");
@@ -285,7 +281,7 @@ public class VentanaUsuario extends JFrame {
 			}
 		});
 		btnCerrar.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnCerrar.setBounds(297, 480, 131, 31);
+		btnCerrar.setBounds(341, 468, 131, 31);
 		contentPane.add(btnCerrar);
 		
 		
@@ -316,7 +312,7 @@ public class VentanaUsuario extends JFrame {
 			}
 		});
 		btnVerRef.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnVerRef.setBounds(71, 210, 131, 31);
+		btnVerRef.setBounds(101, 212, 131, 31);
 		contentPane.add(btnVerRef);
 		
 		
@@ -325,13 +321,22 @@ public class VentanaUsuario extends JFrame {
 		lblNewLabel_2.setBackground(new Color(0, 57, 9));
 		lblNewLabel_2.setOpaque(true);
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_2.setBounds(25, 29, 263, 13);
+		lblNewLabel_2.setBounds(105, 27, 263, 13);
 		contentPane.add(lblNewLabel_2);
 		
 		JLabel lblUsuario = new JLabel("");
 		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblUsuario.setBounds(148, 29, 140, 13);
 		contentPane.add(lblUsuario);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(0, 153, 0));
+		panel.setBounds(0, 0, 78, 743);
+		contentPane.add(panel);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(99, 283, 385, 13);
+		contentPane.add(separator);
 		
 		
 		if (tipo.equals("admin")) {
