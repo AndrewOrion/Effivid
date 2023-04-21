@@ -51,17 +51,11 @@ public class VentanaLogin extends JFrame {
 		getContentPane().add(panel);
 		panel.setLayout(null);
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(10, 132, 0));
-		panel_1.setBounds(0, 0, 109, 772);
-		panel.add(panel_1);
-		panel_1.setLayout(null);
-
 		JLabel lblNewLabel = new JLabel("EFFIVID");
 		lblNewLabel.setBackground(new Color(255, 255, 255));
 		lblNewLabel.setForeground(new Color(10, 132, 0));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 50));
-		lblNewLabel.setBounds(975, 39, 363, 102);
+		lblNewLabel.setBounds(929, 39, 244, 102);
 		panel.add(lblNewLabel);
 
 		JPanel panel_2 = new JPanel();
@@ -85,8 +79,7 @@ public class VentanaLogin extends JFrame {
 		textUsuario.setBounds(174, 94, 299, 32);
 		panel_2.add(textUsuario);
 		textUsuario.setColumns(10);
-//QUITAR!
-textUsuario.setText("ruizabalos_i");
+
 		JButton btnNewButton = new JButton("ACEPTAR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -160,9 +153,29 @@ textUsuario.setText("ruizabalos_i");
 		textPassword = new JPasswordField();
 		textPassword.setBounds(174, 175, 299, 29);
 		panel_2.add(textPassword);
-//QUITAR!
-textPassword.setText("229");
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		
+
+	//	ImageIcon icon = new ImageIcon("/imagenes/logo.png");
+		ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/logo.png"));
+		int ancho = icon.getImage().getWidth(null);
+		int alto = icon.getImage().getHeight(null);
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setBounds(1158, 21, ancho/6, alto/6);
+		Image img = icon.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH);
+		lblLogo.setIcon(new ImageIcon(img));
+		panel.add(lblLogo);
+		
+		ImageIcon icon2 = new ImageIcon(getClass().getResource("/imagenes/lateral.png"));
+		int ancho2 = icon.getImage().getWidth(null);
+		int alto2 = icon.getImage().getHeight(null);
+		JLabel lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setBounds(0, 0, ancho2, alto2);
+		Image img2 = icon2.getImage().getScaledInstance(lblNewLabel_3.getWidth(), lblNewLabel_3.getHeight(), Image.SCALE_SMOOTH);
+		lblNewLabel_3.setIcon(new ImageIcon(img2));
+		panel.add(lblNewLabel_3);
+	//	contentPane = new JPanel();
+	//	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
 	}
 }
