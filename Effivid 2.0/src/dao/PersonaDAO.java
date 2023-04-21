@@ -1,3 +1,6 @@
+/**
+ * @authors Andrés Pino y Alberto Peinado 
+ */
 package dao;
 
 import java.sql.Connection;
@@ -22,6 +25,10 @@ private ConexionBD conexion;
 	
 	//*******************************************************************************************************
 		//FUNCIÓN MOSTRAR
+	/**
+	 * Función que muestra un Array con las personas existentes en la base de datos
+	 * @return: devuelve la lista de personal que hay en la base de datos
+	 */
 		public ArrayList <Persona> obtenerPersonas()
 		{
 			//Obtenemos conexion a la base de datos.
@@ -76,6 +83,12 @@ private ConexionBD conexion;
 		
 	//*******************************************************************************************
 		//FUNCIÓN QUE DEVUELVE UN ELEMENTO PEDIDO (1 persona)
+		/**
+		 * Funcion que devuelve 1 persona correspondiente al usuario y contraseña pasados como parametros
+		 * @param usuario: String que se corresponde con la columna usuario de la base de datos. Sirve como acreditación para el Log in.
+		 * @param contrasena: numerico entero que pertenece a cada usuario. Cada usuario tiene una contraseña diferente
+		 * @return: devuelve la persona a la que corresponden el usuario y la contraseña que pasamos como parametro.
+		 */
 		public Persona obtenerPersona(String usuario, int contrasena)
 		{
 			Connection con = conexion.getConexion();
@@ -125,7 +138,14 @@ private ConexionBD conexion;
 		
 		// **********************************************************************************************
 		// FUNCIÓN VALIDAR LOGIN
-		public boolean validarLogin(int contrasena, String usuario) {
+		/**
+		 * Funcion que devuelve un booleano como respuesta al usuario y contraseña pasados como parametros
+		 * @param contrasena: numerico entero que pertenece a cada usuario. Cada usuario tiene una contraseña diferente.
+		 * @param usuario: String que se corresponde con la columna usuario de la base de datos. Sirve como acreditación para el Log in.
+		 * @return: devuelve TRUE si los parametros pasados (contraseña y usuario) pertenecen a una persona de la base de datos, FALSE en caso contrario.
+		 */
+		public boolean validarLogin(int contrasena, String usuario) 
+		{
 			
 			Connection con = conexion.getConexion();
 		    PreparedStatement statement = null;
@@ -162,51 +182,54 @@ private ConexionBD conexion;
 		
 		//DEVOLVER NOMBRE COMPLETO USUARIO
 		//FUNCIÓN QUE DEVUELVE UN ELEMENTO PEDIDO (1 persona)
-				public Persona obtenerNombre(String usuario)
-				{
-					Connection con = conexion.getConexion();
-					PreparedStatement consulta = null;
-					ResultSet resultado = null;
-					Persona persona = null;
-					
-					String sSQL;
-					try
-					{
-						sSQL = "SELECT * FROM personal where usuario = ?";
-						consulta = con.prepareStatement(sSQL);
-						consulta.setString(1, usuario);
-						resultado = consulta.executeQuery();
-						
-						//Sólo puede devolver una fila si la hay
-						if(resultado.next())
-						{
-							int iId = resultado.getInt("id");
-							int iCod_empleado = resultado.getInt("cod_empleado");
-							String sNombre = resultado.getString("nombre");
-							String sTipo = resultado.getString("tipo");
-							int contrasena = resultado.getInt("contrasena");
-							persona = new Persona(iId, iCod_empleado, sNombre, sTipo, contrasena, usuario);
-						}
-					}
-					catch (SQLException e)
-					{
-						System.out.println("Error al realizar la consulta: " + e.getMessage());
-					}
-					finally
-					{
-					    try
-					    {
-					        if (resultado != null) resultado.close();
-					        if (consulta != null) consulta.close();
-					        conexion.desconectar();
-					    }
-					    catch (SQLException e)
-					    {
-					        System.out.println("Error al liberar recursos: " + e.getMessage());
-					    }
-					}
-					return persona;
-				}
+		/**
+		 * Funcion que devuelve el nombre completo de la persona que ha accedido a la aplicacion, para que se muestre en la ventanaUsuario.
+		 * @param usuario: String pasado como parametro que corresponde al nombre de usuario para acceder a la aplicacion.
+		 * @return: devuelve apellidos y nombre completos del usuario que ha accedido a la aplicacion
+		 */
+		public Persona obtenerNombre(String usuario)
+		{
+			Connection con = conexion.getConexion();
+			PreparedStatement consulta = null;
+			ResultSet resultado = null;
+			Persona persona = null;
+			
+			String sSQL;
+			try
+			{
+				sSQL = "SELECT * FROM personal where usuario = ?";
+				consulta = con.prepareStatement(sSQL);
+				consulta.setString(1, usuario);
+				resultado = consulta.executeQuery();
 				
-		
+				//Sólo puede devolver una fila si la hay
+				if(resultado.next())
+				{
+					int iId = resultado.getInt("id");
+					int iCod_empleado = resultado.getInt("cod_empleado");
+					String sNombre = resultado.getString("nombre");
+					String sTipo = resultado.getString("tipo");
+					int contrasena = resultado.getInt("contrasena");
+					persona = new Persona(iId, iCod_empleado, sNombre, sTipo, contrasena, usuario);
+				}
+			}
+			catch (SQLException e)
+			{
+				System.out.println("Error al realizar la consulta: " + e.getMessage());
+			}
+			finally
+			{
+			    try
+			    {
+			        if (resultado != null) resultado.close();
+			        if (consulta != null) consulta.close();
+			        conexion.desconectar();
+			    }
+			    catch (SQLException e)
+			    {
+			        System.out.println("Error al liberar recursos: " + e.getMessage());
+			    }
+			}
+			return persona;
+		}
 }

@@ -1,3 +1,6 @@
+/**
+ * @authors Andrés Pino y Alberto Peinado 
+ */
 package dao;
 
 import java.sql.Connection;
@@ -21,6 +24,11 @@ private ConexionBD conexion;
 	}
 	//*******************************************************************************************************
 		//FUNCIÓN MOSTRAR DENOMINACIÓN DEL PRODUCTO
+	
+	/**
+	 * Funcion que devuelve un Array con todos los productos existentes en la base de datos
+	 * @return: devuelve una lista de todos los productos que aparecen en la base de datos.
+	 */
 		public ArrayList <Producto> obtenerDenominacion()
 		{
 			//Obtenemos conexion a la base de datos.
@@ -67,8 +75,12 @@ private ConexionBD conexion;
 		}
 		
 		// ***********************************************************************************************************************
-		
 		//FUNCIÓN MOSTRAR DENOMINACIÓN DEL PRODUCTO
+		/**
+		 * Funcion que devuelve una lista con los modelos de los productos correspondientes a la denominacion que pasamos como parametro
+		 * @param denominacion: String pasado como parametro que indica el tipo de producto que queremos mostrar
+		 * @return: devuelve un Array con todos los productos pertenecientes a la denominacion pasada como parametro.
+		 */
 				public ArrayList <Producto> obtenerProductos(String denominacion)
 				{
 					//Obtenemos conexion a la base de datos.
@@ -117,35 +129,53 @@ private ConexionBD conexion;
 					}
 					return lista2;	
 				}
-	
-	public int obtenerRef(String sDescripcion) { 
+				// *****************************************************************************************************
+				// FUNCIÓN PARA OBTENER EL NUMERO DE REFERENCIA DE UN PRODUCTO
+				/**
+				 * Funcion que devuelve el numero de referencia segun la descripcion del producto que pasamos como parametro
+				 * @param sDescripcion: String que corresponde con la descripcion del producto del que queremos obtener su numero de referencia 
+				 * @return: devuelve un numerico entero (Referencia) que pertenece a la descripcion del producto que pasamos como parametro 
+				 */
+				public int obtenerRef(String sDescripcion) 
+				{ 
 					// Obtenemos una conexion a la base de datos. 
 					Connection con = conexion.getConexion(); 
 					PreparedStatement consulta = null; 
 					ResultSet resultado = null; 
 					String SQL = "SELECT Ref FROM productos WHERE descripcion=?";
 					int iRef=0;
-					try { 
+					try 
+					{ 
 						consulta = con.prepareStatement(SQL); 
 						consulta.setString(1, sDescripcion); 
 						resultado = consulta.executeQuery(); 
 						// Sólo puede devolver una fila si la hay 
-						if(resultado.next()) { 
+						if(resultado.next()) 
+						{ 
 							iRef = resultado.getInt("Ref"); 
-							} 
-						} catch (SQLException e) { 
-							System.out.println("Error al realizar la consulta: " +e.getMessage()); 
-							} finally { 
-								try { 
-									resultado.close(); 
-									consulta.close(); 
-									conexion.desconectar(); 
-									} catch (SQLException e) { 
-										System.out.println("Error al liberar recursos: " +e.getMessage()); 
-										} catch (Exception e) { 
-											
-										} 
-							} 
+						} 
+					} 
+					catch (SQLException e) 
+					{ 
+						System.out.println("Error al realizar la consulta: " +e.getMessage()); 
+					} 
+					finally 
+					{ 
+						try 
+						{ 
+							resultado.close(); 
+							consulta.close(); 
+							conexion.desconectar(); 
+						} 
+						catch (SQLException e) 
+						{ 
+							System.out.println("Error al liberar recursos: " +e.getMessage()); 
+						} 
+						catch (Exception e) 
+						{ 
+									
+						} 
+					} 
 					return iRef; 
 				}
 }
