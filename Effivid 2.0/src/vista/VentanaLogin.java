@@ -14,6 +14,7 @@ import dao.PersonaDAO;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.event.ActionEvent;
 public class VentanaLogin extends JFrame {
 
@@ -80,8 +81,10 @@ public class VentanaLogin extends JFrame {
 		panel_2.add(textUsuario);
 		textUsuario.setColumns(10);
 
-		JButton btnNewButton = new JButton("ACEPTAR");
-		btnNewButton.addActionListener(new ActionListener() {
+		MyButton btnNewbutton = new MyButton("ACEPTAR");
+		btnNewbutton.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnNewbutton.setBounds(150, 263, 109, 41);
+		btnNewbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String sUsuario;
 				String sContrasena;
@@ -136,9 +139,8 @@ public class VentanaLogin extends JFrame {
 				 	}
 				}
 			});
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnNewButton.setBounds(150, 263, 109, 41);
-		panel_2.add(btnNewButton);
+		
+		panel_2.add(btnNewbutton);
 
 		JButton btnNewButton_1 = new JButton("SALIR");
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -170,12 +172,44 @@ public class VentanaLogin extends JFrame {
 		int ancho2 = icon.getImage().getWidth(null);
 		int alto2 = icon.getImage().getHeight(null);
 		JLabel lblNewLabel_3 = new JLabel("");
-		lblNewLabel_3.setBounds(0, 0, ancho2, alto2);
+		lblNewLabel_3.setBounds(0, 0, 900, 900);
 		Image img2 = icon2.getImage().getScaledInstance(lblNewLabel_3.getWidth(), lblNewLabel_3.getHeight(), Image.SCALE_SMOOTH);
 		lblNewLabel_3.setIcon(new ImageIcon(img2));
 		panel.add(lblNewLabel_3);
 	//	contentPane = new JPanel();
 	//	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
+	}
+	
+	public class MyButton extends JButton {
+	    
+	    public MyButton(String text) {
+	        super(text);
+	        setForeground(Color.WHITE);
+	        setBackground(Color.BLUE);
+	        setFont(new Font("Arial", Font.BOLD, 16));
+	        setContentAreaFilled(false);
+	        setFocusPainted(false);
+	        setOpaque(true);
+	        
+	        setBorderPainted(false);
+	        setFocusable(false);
+	        setPreferredSize(new Dimension(120, 40));
+	        
+	        // Border radius
+	        int radius = 15;
+	        setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), radius, radius));
+	    }
+	    
+	    @Override
+	    protected void paintComponent(Graphics g) {
+	        if (getModel().isRollover()) {
+	            setBackground(Color.GREEN);
+	        } else {
+	            setBackground(Color.GREEN.darker());
+	        }
+	        
+	        super.paintComponent(g);
+	    }
 	}
 }
