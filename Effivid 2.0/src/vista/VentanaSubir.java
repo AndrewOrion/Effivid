@@ -249,53 +249,43 @@ public class VentanaSubir extends JFrame {
 						{
 							Path fuente = Paths.get(archivoSeleccionado.getAbsolutePath());
 							Path destino = Paths.get(sNombreArchivoCompleto);
-						      
-							long size = Files.size(fuente);
-
-						    Files.copy(fuente, destino, StandardCopyOption.REPLACE_EXISTING);
-						    
-							//String inputFilePath = archivoSeleccionado.getAbsolutePath();
 						    String sNombreArchivoNuevo = sDestino + sExtensionNueva;
-						  
+  
+							long size = Files.size(fuente);
+							if (Files.exists(destino)) {
+								JOptionPane.showMessageDialog(null, "El vídeo ya existe en el destino");
+							}
+							else{
+								Files.copy(fuente, destino, StandardCopyOption.COPY_ATTRIBUTES);
 							
-							if (!sExtension.equalsIgnoreCase(".mp4")) {
-								try {
-								    ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "\"\"", "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg", "-i", destino.toString(), "-c:v", "libx264", "-b:v", "1.5M", "-c:a", "aac", "-b:a", "128k", sNombreArchivoNuevo);
-									pb.redirectErrorStream(true);
-								    Process p = pb.start();
-								    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-								    
-								    String line;
-								    while ((line = br.readLine()) != null) {
-								    	 if (line.contains("time=")) {
-								                String[] parts = line.split("time=");
-								                String[] timeParts = parts[1].split("\\.");
-								                String[] hms = timeParts[0].split(":");
-								                int hours = Integer.parseInt(hms[0]);
-								                int minutes = Integer.parseInt(hms[1]);
-								                int seconds = Integer.parseInt(hms[2]);
-								                int totalSeconds = hours * 3600 + minutes * 60 + seconds;
-			   
-											    }
-											    
-								    	 }			    
+								//String inputFilePath = archivoSeleccionado.getAbsolutePath();
+							  
 								
-								} catch (IOException e1) {
-								    e1.printStackTrace();
+								if (!sExtension.equalsIgnoreCase(".mp4") ) {
+									try {
+									    ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "\"\"", "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg", "-i", destino.toString(), "-c:v", "libx264", "-b:v", "1.5M", "-c:a", "aac", "-b:a", "128k", sNombreArchivoNuevo);
+										pb.redirectErrorStream(true);
+									    Process p = pb.start();
+									    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+				
+									} catch (IOException e1) {
+									    e1.printStackTrace();
+									}
+									//borrar archivo antiguo
+									String filePath = destino.toString();
+							        File file = new File(filePath);
+							        
+							        if (file.delete()) {
+							            System.out.println("El archivo anterior se borró exitosamente.");
+							        } else {
+							            System.out.println("El archivo no se pudo borrar.");
+							        }
 								}
-								//borrar archivo antiguo
-								String filePath = destino.toString();
-						        File file = new File(filePath);
-						        
-						        if (file.delete()) {
-						            System.out.println("El archivo anterior se borró exitosamente.");
-						        } else {
-						            System.out.println("El archivo no se pudo borrar.");
-						        }
 							}
 							dispose();
 							
-						    System.out.println("VIDEO SUBIDO");
+							JOptionPane.showMessageDialog(null, "El vídeo ya existe en el destino");
+
 						    sNombre = sNombreArchivoNuevo;
 							iRef_producto = Integer.parseInt(sRef_producto);
 							java.sql.Date fechaActual = new java.sql.Date(System.currentTimeMillis());
@@ -306,8 +296,7 @@ public class VentanaSubir extends JFrame {
 							if (iResultado == 0) {
 								JOptionPane.showMessageDialog(null, "No se ha podido insertar vídeo");
 							}
-							
-							
+													
 						} 
 						catch (IOException e2) 
 						{
