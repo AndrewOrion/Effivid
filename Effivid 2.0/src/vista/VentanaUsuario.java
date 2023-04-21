@@ -338,18 +338,21 @@ public class VentanaUsuario extends JFrame {
 		separator.setBounds(99, 283, 385, 13);
 		contentPane.add(separator);
 		
-		
-		if (tipo.equals("admin")) {
+
+		if (tipo.equals("admin")) 
+		{
 			JPanel panelAdmin = new JPanel();
 			panelAdmin.setBorder(null);
 			panelAdmin.setBackground(new Color(225, 255, 239));
-			panelAdmin.setBounds(10, 532, 469, 169);
+			panelAdmin.setBounds(17, 532, 469, 169);
 			contentPane.add(panelAdmin);
 			panelAdmin.setLayout(null);
 			
 			JButton btnAdd = new JButton("AÑADIR VÍDEO");
-			btnAdd.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
+			btnAdd.addActionListener(new ActionListener() 
+			{
+				public void actionPerformed(ActionEvent e) 
+				{
 					if (txtRef.getText().equals("")) {
 						JOptionPane.showMessageDialog(null, "Seleccione Producto y puse VER");
 					}else {
@@ -359,7 +362,7 @@ public class VentanaUsuario extends JFrame {
 				}
 			});
 			btnAdd.setFont(new Font("Tahoma", Font.BOLD, 15));
-			btnAdd.setBounds(28, 102, 169, 57);
+			btnAdd.setBounds(81, 81, 169, 44);
 			panelAdmin.add(btnAdd);
 			
 			JButton btnEliminar = new JButton("ELIMINAR VÍDEO");
@@ -385,7 +388,8 @@ public class VentanaUsuario extends JFrame {
 					
 					if (iRespuesta == 0)
 						{ //si usuario dice SI
-							if (iElemento >= 0) {
+							if (iElemento >= 0) 
+							{
 								//borrar archivo fisicamente
 								int fila = table.getSelectedRow();
 								TableModel model = table.getModel();
@@ -394,9 +398,12 @@ public class VentanaUsuario extends JFrame {
 								//borrar archivo fisicamente
 						        File file = new File(nombre);
 						        
-						        if (file.delete()) {
+						        if (file.delete()) 
+						        {
 						            System.out.println("El archivo anterior se borró exitosamente.");
-						        } else {
+						        } 
+						        else 
+						        {
 						            System.out.println("El archivo no se pudo borrar.");
 						        }
 								codigo_video = (int) table.getValueAt(iElemento, 1); //cojo el id del elemento (fila 0)
@@ -417,24 +424,23 @@ public class VentanaUsuario extends JFrame {
 				}
 			});
 			btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 15));
-			btnEliminar.setBounds(246, 102, 183, 57);
+			btnEliminar.setBounds(276, 81, 183, 44);
 			panelAdmin.add(btnEliminar);
 			
 			JLabel lblNewLabel_3 = new JLabel("Opciones de administrador:");
+			lblNewLabel_3.setForeground(new Color(255, 255, 255));
 			lblNewLabel_3.setOpaque(true);
 			lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblNewLabel_3.setBackground(new Color(128, 255, 128));
-			lblNewLabel_3.setBounds(112, 49, 221, 26);
+			lblNewLabel_3.setBackground(new Color(0, 153, 0));
+			lblNewLabel_3.setBounds(151, 30, 221, 26);
 			panelAdmin.add(lblNewLabel_3);
 			
-			JLabel lblO_1 = new JLabel("________________________________________________________________");
-			lblO_1.setHorizontalAlignment(SwingConstants.RIGHT);
-			lblO_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-			lblO_1.setBounds(10, 0, 461, 20);
-			panelAdmin.add(lblO_1);
+			JSeparator separator_1 = new JSeparator();
+			separator_1.setBounds(76, 10, 383, 12);
+			panelAdmin.add(separator_1);
 		}
-		//end panel admin
+		//end panel admin 
 
 		
 	}
