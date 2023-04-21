@@ -79,7 +79,6 @@ public class VentanaSubir extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		
 		JLabel lblNewLabel = new JLabel("Seleccione el vídeo:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNewLabel.setBounds(84, 351, 169, 29);
@@ -156,8 +155,6 @@ public class VentanaSubir extends JFrame {
 		        }
 		       /* else if (iSeleccion == JFileChooser.CANCEL_OPTION) {
 		        }*/
-		                 
-	        
 			}
 		});
 		btnExplorar.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -256,11 +253,14 @@ public class VentanaSubir extends JFrame {
 								JOptionPane.showMessageDialog(null, "El vídeo ya existe en el destino");
 							}
 							else{
+								//esto copia el archivo si no existe
 								Files.copy(fuente, destino, StandardCopyOption.COPY_ATTRIBUTES);
-							
+								
+								//esto copia el archivo y si ya existe en el destino lo machaca
+								//Files.copy(fuente, destino, StandardCopyOption.REPLACE_EXISTING);
+
 								//String inputFilePath = archivoSeleccionado.getAbsolutePath();
 							  
-								
 								if (!sExtension.equalsIgnoreCase(".mp4") ) {
 									try {
 									    ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "\"\"", "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg", "-i", destino.toString(), "-c:v", "libx264", "-b:v", "1.5M", "-c:a", "aac", "-b:a", "128k", sNombreArchivoNuevo);
@@ -307,13 +307,9 @@ public class VentanaSubir extends JFrame {
 					else {
 						JOptionPane.showMessageDialog(null, "Seleccione el nº de puesto");
 					}
-				
-						
-					
 				}
 				//textArchivo.setText("");
-				//textDestino.setText("");
-			  
+				//textDestino.setText("");			  
 			 }
 		});
 		btnGuardar.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -325,8 +321,7 @@ public class VentanaSubir extends JFrame {
 		lblPuesto.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblPuesto.setBounds(84, 259, 97, 29);
 		contentPane.add(lblPuesto);
-		
-		
+				
 		spinnerPuesto.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		spinnerPuesto.setBounds(204, 260, 50, 27);
 		contentPane.add(spinnerPuesto);
@@ -335,8 +330,7 @@ public class VentanaSubir extends JFrame {
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel_1.setBounds(84, 86, 136, 37);
 		contentPane.add(lblNewLabel_1);
-		
-		
+				
 		lblRef.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblRef.setBounds(205, 86, 83, 26);
 		lblRef.setText(sRef);
