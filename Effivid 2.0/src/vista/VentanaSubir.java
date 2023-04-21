@@ -257,8 +257,6 @@ public class VentanaSubir extends JFrame {
 							//String inputFilePath = archivoSeleccionado.getAbsolutePath();
 						    String sNombreArchivoNuevo = sDestino + sExtensionNueva;
 						  
-							String cmd ="cmd.exe /c ";
-							String ruta = "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg -i \"" + destino.toString() + "\" -c:v libx264 -b:v 1.5M -c:a aac -b:a 128k \"" + sNombreArchivoNuevo + "\"";
 							
 							if (!sExtension.equalsIgnoreCase(".mp4")) {
 								try {

@@ -85,7 +85,8 @@ public class VentanaLogin extends JFrame {
 		textUsuario.setBounds(174, 94, 299, 32);
 		panel_2.add(textUsuario);
 		textUsuario.setColumns(10);
-
+//QUITAR!
+textUsuario.setText("ruizabalos_i");
 		JButton btnNewButton = new JButton("ACEPTAR");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -159,6 +160,8 @@ public class VentanaLogin extends JFrame {
 		textPassword = new JPasswordField();
 		textPassword.setBounds(174, 175, 299, 29);
 		panel_2.add(textPassword);
+//QUITAR!
+textPassword.setText("229");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 	}

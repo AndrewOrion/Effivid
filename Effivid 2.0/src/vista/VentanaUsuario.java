@@ -1,3 +1,6 @@
+/**
+ * @author Andres Pino Gallardo y Alberto Peinado
+ */
 package vista;
 
 import javax.swing.border.Border;
@@ -56,14 +59,12 @@ public class VentanaUsuario extends JFrame {
 			String bienvenido = user.getNombre();
 			String tipo = user.getTipo();
 			
-			ArrayList<Producto> lista = new ArrayList<Producto>();
-			
+			//Lista de productos
+			ArrayList<Producto> lista = new ArrayList<Producto>();	
 			ProductoDAO productoDAO = new ProductoDAO();
-			lista = productoDAO.obtenerDenominacion();
-					
+			lista = productoDAO.obtenerDenominacion();					
 			cbProducto.removeAllItems();
-			cbProducto.addItem("- Seleccione un producto -" );
-			
+			cbProducto.addItem("- Seleccione un producto -" );		
 			for(Producto producto:lista)
 			{
 				String denominacion = producto.getDenominacion();
@@ -171,6 +172,7 @@ public class VentanaUsuario extends JFrame {
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
 		contentPane.add(scrollPane);
 		
+		//Definicion de la tabla
 		table = new JTable();
 		table.setRowHeight(50);
 		table.setShowVerticalLines(false);
@@ -202,22 +204,27 @@ public class VentanaUsuario extends JFrame {
 		table.getColumnModel().getColumn(3).setMaxWidth(100);
 		table.getColumnModel().getColumn(4).setPreferredWidth(90);
 		table.getColumnModel().getColumn(4).setMaxWidth(90);
-		// Crear un DefaultTableCellRenderer personalizado para alinear el texto centrado en la columna 0
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
-		TableColumn columnaCodigo = table.getColumnModel().getColumn(1);
-		columnaCodigo.setCellRenderer(centerRenderer);
-		TableColumn columnaFecha = table.getColumnModel().getColumn(3);
-		columnaFecha.setCellRenderer(centerRenderer);
 		
-		
-		// Obtener el renderizador de celdas por defecto
-		DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
-		// Asignar el renderizador personalizado a una columna específica (por ejemplo, la columna 1) y establecer el color de fondo deseado (por ejemplo, rojo)
-		Color backgroundColor = Color.green;
-		defaultRenderer.setBackground(backgroundColor);
+		// Crear un DefaultTableCellRenderer personalizado para alinear el texto centrado en la columna 0 y 
+		//fondo verde y letras negrita
+		DefaultTableCellRenderer puestoRenderer = new DefaultTableCellRenderer();
+		Color backgroundPuesto = Color.LIGHT_GRAY;
+		//Color letrasPuesto = Color.WHITE;
+		puestoRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+		puestoRenderer.setBackground(backgroundPuesto);
+		puestoRenderer.setFont(new Font("Tahoma", Font.BOLD, 15)); // Fuente en negrita
+		//puestoRenderer.setForeground(letrasPuesto);
 		TableColumn columnaPuesto = table.getColumnModel().getColumn(0);
-		columnaPuesto.setCellRenderer(defaultRenderer);
+		columnaPuesto.setCellRenderer(puestoRenderer);
+		
+		// renderer columna puesto
+		DefaultTableCellRenderer codigoRenderer = new DefaultTableCellRenderer();
+		Color backgroundCod = Color.green.brighter();
+		codigoRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+		codigoRenderer.setBackground(backgroundCod);
+		codigoRenderer.setFont(new Font("Tahoma", Font.BOLD, 15)); // Fuente en negrita
+		TableColumn columnaCod = table.getColumnModel().getColumn(1);
+		columnaCod.setCellRenderer(codigoRenderer);
 		
 		// Crear un renderizador personalizado para la columna de botones
 		TableCellRenderer buttonRenderer = new JTableButtonRenderer();
@@ -267,7 +274,7 @@ public class VentanaUsuario extends JFrame {
 					JOptionPane.showMessageDialog(null,"Rellene alguna de las dos opciones:", "Error", JOptionPane.WARNING_MESSAGE);
 				}
 				else {						
-						rellenarVentana(iRef);
+						rellenarVentana(iRef);//método para rellenar la jtable
 						repaint();				
 				}
 			}	
@@ -381,12 +388,10 @@ public class VentanaUsuario extends JFrame {
 					if (iRespuesta == 0)
 						{ //si usuario dice SI
 							if (iElemento >= 0) {
-								//borrar archivo fisicamente
+								//borrar archivo fisicamente del disco
 								int fila = table.getSelectedRow();
 								TableModel model = table.getModel();
 								String nombre = model.getValueAt(fila, 2).toString();
-								System.out.print(nombre);
-								//borrar archivo fisicamente
 						        File file = new File(nombre);
 						        
 						        if (file.delete()) {
@@ -394,6 +399,8 @@ public class VentanaUsuario extends JFrame {
 						        } else {
 						            System.out.println("El archivo no se pudo borrar.");
 						        }
+						        
+						        //eliminar de la base de datos
 								codigo_video = (int) table.getValueAt(iElemento, 1); //cojo el id del elemento (fila 0)
 								VideoDAO videoDAO = new VideoDAO();
 											
@@ -460,6 +467,7 @@ public class VentanaUsuario extends JFrame {
 	    return error;
 	}
 	
+	//FUNCIÓN QUE MUESTRA LA TABLA CON LOS VALORES DEL PRODUCTO SELECCIONADO
 	private void rellenarVentana(int iRef) {
 		revalidate();
 		repaint();
@@ -483,12 +491,15 @@ public class VentanaUsuario extends JFrame {
 			    int totalFilas = modelo.getRowCount(); // Obtener el número total de filas en la tabla
 	
 				// Crear una instancia del renderizador personalizado
+			    //para que no muestre la ruta completa sino solo en nombre del video
 				NombreVideoRenderer nombreVideoRenderer = new NombreVideoRenderer();
 	
 				// Asignar el renderizador a la columna del nombre del video (suponiendo que sea la columna 2)
 				table.getColumnModel().getColumn(2).setCellRenderer(nombreVideoRenderer);
 				
 				if (vi.getPuesto() != numeroPuestoAnterior) {
+
+					// establecer el renderer personalizado en la tabla
 					String puesto = "Puesto "+vi.getPuesto();
 					
 			        Object file[] = {	  
@@ -519,6 +530,8 @@ public class VentanaUsuario extends JFrame {
 	    }
 		
 	}
+	
+	//RENDERIZADORES PARA LA COLUMNA DE BOTONES DE VIDEO
 	public class JTableButtonRenderer implements TableCellRenderer {
 	    @Override
 	    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -581,7 +594,8 @@ public class VentanaUsuario extends JFrame {
 	    }
 	}
 	
-	// Crear una clase que implemente TableCellRenderer
+	// RENDERIZADOR PARA QUE SOLO MUESTRE EL NOMBRE DEL VIDEO EN LA COLUMNA NOMBRE
+	//PERO QUE REALMENTE SIGA ALMACENANDO TODA LA RUTA DEL VIDEO
 	public class NombreVideoRenderer extends DefaultTableCellRenderer {
 
 	    @Override
@@ -598,6 +612,8 @@ public class VentanaUsuario extends JFrame {
 	    }
 	}
 	
+	
+	//CAMBIAR COLOR FONDO DE LA TABLA
 	public class ColumnBackgroundRenderer extends DefaultTableCellRenderer {
 
 	    private int targetColumn;
