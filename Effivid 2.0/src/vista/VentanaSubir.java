@@ -250,6 +250,7 @@ public class VentanaSubir extends JFrame {
   
 							long size = Files.size(fuente);
 							if (Files.exists(destino)) {
+								
 								JOptionPane.showMessageDialog(null, "El vídeo ya existe en el destino");
 							}
 							else{
@@ -260,7 +261,8 @@ public class VentanaSubir extends JFrame {
 								//Files.copy(fuente, destino, StandardCopyOption.REPLACE_EXISTING);
 
 								//String inputFilePath = archivoSeleccionado.getAbsolutePath();
-							  
+								
+
 								if (!sExtension.equalsIgnoreCase(".mp4") ) {
 									try {
 									    ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "\"\"", "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg", "-i", destino.toString(), "-c:v", "libx264", "-b:v", "1.5M", "-c:a", "aac", "-b:a", "128k", sNombreArchivoNuevo);
@@ -281,21 +283,20 @@ public class VentanaSubir extends JFrame {
 							            System.out.println("El archivo no se pudo borrar.");
 							        }
 								}
+								sNombre = sNombreArchivoNuevo;
+								iRef_producto = Integer.parseInt(sRef_producto);
+								java.sql.Date fechaActual = new java.sql.Date(System.currentTimeMillis());
+
+								Video vi = new Video(sNombre,iRef_producto,iPuesto,fechaActual); 				
+								VideoDAO videoDAO = new VideoDAO();
+								iResultado = videoDAO.insertarVideo(vi);	
+								if (iResultado == 0) {
+									JOptionPane.showMessageDialog(null, "No se ha podido insertar vídeo");
+								}
+								dispose();
 							}
-							dispose();
 							
-							JOptionPane.showMessageDialog(null, "El vídeo ya existe en el destino");
-
-						    sNombre = sNombreArchivoNuevo;
-							iRef_producto = Integer.parseInt(sRef_producto);
-							java.sql.Date fechaActual = new java.sql.Date(System.currentTimeMillis());
-
-							Video vi = new Video(sNombre,iRef_producto,iPuesto,fechaActual); 				
-							VideoDAO videoDAO = new VideoDAO();
-							iResultado = videoDAO.insertarVideo(vi);	
-							if (iResultado == 0) {
-								JOptionPane.showMessageDialog(null, "No se ha podido insertar vídeo");
-							}
+						    
 													
 						} 
 						catch (IOException e2) 

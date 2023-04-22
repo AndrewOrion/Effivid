@@ -1,16 +1,59 @@
 package vista;
 
 import java.awt.BorderLayout;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+
+import modelo.Persona;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
+
+import conexion.ConexionBD;
+import dao.ProductoDAO;
+import modelo.Producto;
+import modelo.Video;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import dao.VideoDAO;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import javax.swing.*;
+import java.awt.*;
+import dao.PersonaDAO;
+
 import java.awt.EventQueue;
 import javax.swing.*;
 import java.awt.*;
 
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.Border;
+
 import java.awt.Toolkit;
 import javax.swing.border.LineBorder;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.geom.RoundRectangle2D;
 
 import dao.PersonaDAO;
-
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.RoundRectangle2D;
+import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -40,7 +83,7 @@ public class VentanaLogin extends JFrame {
 		setUndecorated(true);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1348, 772);
+		setBounds(100, 100, 1328, 800);
 	    setLocationRelativeTo(null); // Centra la ventana en la pantalla
 
 		getContentPane().setLayout(null);
@@ -48,7 +91,7 @@ public class VentanaLogin extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(227, 255, 235));
 		panel.setBorder(new LineBorder(new Color(128, 255, 128), 5));
-		panel.setBounds(0, 0, 1348, 772);
+		panel.setBounds(0, 0, 1328, 800);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -62,7 +105,7 @@ public class VentanaLogin extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(214, 254, 227));
 		panel_2.setBorder(new LineBorder(new Color(10, 132, 0), 5, true));
-		panel_2.setBounds(441, 249, 578, 341);
+		panel_2.setBounds(394, 251, 578, 341);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 
@@ -82,8 +125,8 @@ public class VentanaLogin extends JFrame {
 		textUsuario.setColumns(10);
 
 		MyButton btnNewbutton = new MyButton("ACEPTAR");
-		btnNewbutton.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnNewbutton.setBounds(150, 263, 109, 41);
+
 		btnNewbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String sUsuario;
@@ -142,7 +185,7 @@ public class VentanaLogin extends JFrame {
 		
 		panel_2.add(btnNewbutton);
 
-		JButton btnNewButton_1 = new JButton("SALIR");
+		MyButton btnNewButton_1 = new MyButton("SALIR");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -186,25 +229,17 @@ public class VentanaLogin extends JFrame {
 	    public MyButton(String text) {
 	        super(text);
 	        setForeground(Color.WHITE);
-	        setBackground(Color.BLUE);
+	        setBackground(Color.BLACK);
 	        setFont(new Font("Arial", Font.BOLD, 16));
 	        setContentAreaFilled(false);
 	        setFocusPainted(false);
 	        setOpaque(true);
-	        
-	        setBorderPainted(false);
-	        setFocusable(false);
-	        setPreferredSize(new Dimension(120, 40));
-	        
-	        // Border radius
-	        int radius = 15;
-	        setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), radius, radius));
+
 	    }
-	    
 	    @Override
 	    protected void paintComponent(Graphics g) {
 	        if (getModel().isRollover()) {
-	            setBackground(Color.GREEN);
+	            setBackground(Color.green);
 	        } else {
 	            setBackground(Color.GREEN.darker());
 	        }
