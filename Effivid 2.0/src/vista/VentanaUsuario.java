@@ -29,6 +29,8 @@ import java.nio.file.Paths;
 import javax.swing.*;
 import java.awt.*;
 import dao.PersonaDAO;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
 @SuppressWarnings("serial")
 public class VentanaUsuario extends JFrame {
 
@@ -287,6 +289,7 @@ public class VentanaUsuario extends JFrame {
 		
 		//Boton ver referencia
 		JButton btnVerRef = new JButton("Ver");
+		btnVerRef.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		btnVerRef.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String sProducto = "";
