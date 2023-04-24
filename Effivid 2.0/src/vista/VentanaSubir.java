@@ -380,8 +380,17 @@ public class VentanaSubir extends JFrame {
 		lblNewLabel_2.setForeground(new Color(0, 153, 0));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 40));
 		lblNewLabel_2.setBackground(Color.WHITE);
-		lblNewLabel_2.setBounds(397, 21, 175, 78);
+		lblNewLabel_2.setBounds(382, 21, 175, 78);
 		contentPane.add(lblNewLabel_2);
+		
+		ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/logo.png"));
+		int ancho = icon.getImage().getWidth(null);
+		int alto = icon.getImage().getHeight(null);
+		JLabel lblLogo = new JLabel("");
+		contentPane.add(lblLogo);
+		lblLogo.setBounds(559, 10, 83, 94);
+		Image img = icon.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH);
+		lblLogo.setIcon(new ImageIcon(img));
 	
 	}
 }
