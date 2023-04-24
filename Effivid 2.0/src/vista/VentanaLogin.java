@@ -121,6 +121,7 @@ public class VentanaLogin extends JFrame {
 
 		textUsuario = new JTextField();
 		textUsuario.setBounds(174, 94, 299, 32);
+textUsuario.setText("ruizabalos_i");//quitar
 		panel_2.add(textUsuario);
 		textUsuario.setColumns(10);
 
@@ -197,6 +198,7 @@ public class VentanaLogin extends JFrame {
 
 		textPassword = new JPasswordField();
 		textPassword.setBounds(174, 175, 299, 29);
+textPassword.setText("229");//quitar
 		panel_2.add(textPassword);
 		
 		
