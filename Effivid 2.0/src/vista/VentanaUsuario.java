@@ -126,14 +126,14 @@ public class VentanaUsuario extends JFrame {
 		txtRef = new JTextField();
 		txtRef.setToolTipText("Inserte el número de referencia del producto sobre el que desee ver el vídeo");
 		txtRef.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		txtRef.setBounds(223, 136, 249, 31);
+		txtRef.setBounds(223, 168, 249, 31);
 		contentPane.add(txtRef);
 		txtRef.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Nº Referencia:");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel.setBounds(99, 140, 114, 20);
+		lblNewLabel.setBounds(99, 172, 114, 20);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblProducto = new JLabel("Producto:");
@@ -157,7 +157,7 @@ public class VentanaUsuario extends JFrame {
 		lblNewLabel_1.setOpaque(true);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(103, 64, 341, 31);
+		lblNewLabel_1.setBounds(131, 103, 341, 31);
 		contentPane.add(lblNewLabel_1);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -285,7 +285,7 @@ public class VentanaUsuario extends JFrame {
 		JButton btnCerrar = new JButton();
 		btnCerrar.setOpaque(false);
 		btnCerrar.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnCerrar.setBounds(439, 23, 33, 31);
+		btnCerrar.setBounds(105, 32, 33, 31);
 		String imagePath = "/imagenes/cerrar.png";
 		URL imageURL = getClass().getResource(imagePath);
 		ImageIcon icon = new ImageIcon(imageURL);
@@ -330,7 +330,7 @@ public class VentanaUsuario extends JFrame {
 			}
 		});
 		btnVerRef.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnVerRef.setBounds(341, 215, 131, 31);
+		btnVerRef.setBounds(341, 227, 131, 31);
 		contentPane.add(btnVerRef);
 		
 		
@@ -339,7 +339,7 @@ public class VentanaUsuario extends JFrame {
 		lblNewLabel_2.setBackground(new Color(0, 57, 9));
 		lblNewLabel_2.setOpaque(true);
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_2.setBounds(88, 27, 310, 13);
+		lblNewLabel_2.setBounds(162, 50, 310, 13);
 		contentPane.add(lblNewLabel_2);
 		
 		JLabel lblUsuario = new JLabel("");
