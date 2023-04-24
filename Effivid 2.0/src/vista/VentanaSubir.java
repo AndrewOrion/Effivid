@@ -1,5 +1,6 @@
 package vista;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import java.awt.event.ActionEvent;
@@ -56,6 +57,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import modelo.Video;
 import dao.VideoDAO;
+import javax.swing.ImageIcon;
 
 public class VentanaSubir extends JFrame {
 
@@ -70,9 +72,11 @@ public class VentanaSubir extends JFrame {
 	private int control=0;
 	
 	public VentanaSubir(String sRef) {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1039, 662);
+		setBounds(100, 100, 690, 442);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(204, 255, 204));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 	    setLocationRelativeTo(null); // Centra la ventana en la pantalla
 
@@ -81,31 +85,32 @@ public class VentanaSubir extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Seleccione el vídeo:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setBounds(84, 351, 169, 29);
+		lblNewLabel.setBounds(117, 163, 130, 29);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblArchivo = new JLabel("Archivo:");
 		lblArchivo.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblArchivo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblArchivo.setBounds(84, 390, 64, 29);
+		lblArchivo.setBounds(117, 202, 64, 29);
 		contentPane.add(lblArchivo);
 		
 		textArchivo = new JTextField();
 		textArchivo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		textArchivo.setBounds(158, 392, 374, 26);
+		textArchivo.setBounds(191, 202, 358, 26);
 		contentPane.add(textArchivo);
 		textArchivo.setColumns(10);
 		
 		JLabel lblDestino = new JLabel("Destino:");
 		lblDestino.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDestino.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDestino.setBounds(84, 457, 64, 29);
+		lblDestino.setBounds(117, 253, 64, 29);
 		contentPane.add(lblDestino);
 		
 		textDestino = new JTextField();
 		textDestino.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textDestino.setColumns(10);
-		textDestino.setBounds(158, 459, 374, 26);
+		textDestino.setBounds(191, 255, 358, 26);
+		textDestino.setText("c:/videos/"+ sRef + "/");
 		contentPane.add(textDestino);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -116,7 +121,7 @@ public class VentanaSubir extends JFrame {
 			}
 		});
 		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnCancelar.setBounds(526, 550, 116, 29);
+		btnCancelar.setBounds(536, 323, 116, 29);
 		contentPane.add(btnCancelar);
 		
 		JButton btnExplorar = new JButton("Explorar");
@@ -158,7 +163,7 @@ public class VentanaSubir extends JFrame {
 			}
 		});
 		btnExplorar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnExplorar.setBounds(549, 390, 93, 29);
+		btnExplorar.setBounds(559, 202, 93, 29);
 		contentPane.add(btnExplorar);
 		
 		JButton btnDestino = new JButton("Destino");
@@ -201,7 +206,7 @@ public class VentanaSubir extends JFrame {
 			
 		});
 		btnDestino.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnDestino.setBounds(549, 457, 93, 29);
+		btnDestino.setBounds(559, 253, 93, 29);
 		contentPane.add(btnDestino);
 		
 		JButton btnGuardar = new JButton("Guardar");
@@ -242,8 +247,7 @@ public class VentanaSubir extends JFrame {
 						sNombreArchivoCompleto = sDestino + sExtension;
 		
 						// Copiar el archivo seleccionado a la nueva ubicación
-						try 
-						{
+						try {
 							Path fuente = Paths.get(archivoSeleccionado.getAbsolutePath());
 							Path destino = Paths.get(sNombreArchivoCompleto);
 						    String sNombreArchivoNuevo = sDestino + sExtensionNueva;
@@ -314,28 +318,56 @@ public class VentanaSubir extends JFrame {
 			 }
 		});
 		btnGuardar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnGuardar.setBounds(355, 550, 116, 29);
+		btnGuardar.setBounds(397, 323, 116, 29);
 		contentPane.add(btnGuardar);
 		
 		JLabel lblPuesto = new JLabel("Puesto nº:");
-		lblPuesto.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPuesto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPuesto.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblPuesto.setBounds(84, 259, 97, 29);
+		lblPuesto.setBounds(117, 110, 97, 29);
 		contentPane.add(lblPuesto);
-				
+		
+		
 		spinnerPuesto.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		spinnerPuesto.setBounds(204, 260, 50, 27);
+		spinnerPuesto.setBounds(232, 111, 50, 27);
 		contentPane.add(spinnerPuesto);
 		
 		JLabel lblNewLabel_1 = new JLabel("REFERENCIA:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_1.setBounds(84, 86, 136, 37);
+		lblNewLabel_1.setBounds(117, 52, 114, 37);
 		contentPane.add(lblNewLabel_1);
-				
+		
+		
 		lblRef.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblRef.setBounds(205, 86, 83, 26);
+		lblRef.setBounds(232, 57, 83, 26);
 		lblRef.setText(sRef);
 		contentPane.add(lblRef);
-	
+		
+		JLabel lblNewLabel_2 = new JLabel("EFFIVID");
+		lblNewLabel_2.setForeground(new Color(0, 153, 0));
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblNewLabel_2.setBackground(Color.WHITE);
+		lblNewLabel_2.setBounds(382, 21, 175, 78);
+		contentPane.add(lblNewLabel_2);
+		
+		ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/logo.png"));
+		int ancho = icon.getImage().getWidth(null);
+		int alto = icon.getImage().getHeight(null);
+		JLabel lblLogo = new JLabel("");
+		contentPane.add(lblLogo);
+		lblLogo.setBounds(559, 10, 83, 94);
+		Image img = icon.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH);
+		lblLogo.setIcon(new ImageIcon(img));
+		
+		ImageIcon icon2 = new ImageIcon(getClass().getResource("/imagenes/lateral.png"));
+		int ancho2 = icon.getImage().getWidth(null);
+		int alto2 = icon.getImage().getHeight(null);
+		JLabel lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setBounds(0, 0, 900, 900);
+		Image img2 = icon2.getImage().getScaledInstance(lblNewLabel_3.getWidth(), lblNewLabel_3.getHeight(), Image.SCALE_SMOOTH);
+		lblNewLabel_3.setIcon(new ImageIcon(img2));
+		contentPane.add(lblNewLabel_3);
+		
+
 	}
 }
