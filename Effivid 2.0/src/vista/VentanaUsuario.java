@@ -206,11 +206,9 @@ public class VentanaUsuario extends JFrame {
 		//fondo verde y letras negrita
 		DefaultTableCellRenderer puestoRenderer = new DefaultTableCellRenderer();
 		Color backgroundPuesto = Color.LIGHT_GRAY;
-		//Color letrasPuesto = Color.WHITE;
 		puestoRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
 		puestoRenderer.setBackground(backgroundPuesto);
-		puestoRenderer.setFont(new Font("Tahoma", Font.BOLD, 15)); // Fuente en negrita
-		//puestoRenderer.setForeground(letrasPuesto);
+		puestoRenderer.setFont(new Font("Tahoma", Font.BOLD, 18)); // Fuente en negrita
 		TableColumn columnaPuesto = table.getColumnModel().getColumn(0);
 		columnaPuesto.setCellRenderer(puestoRenderer);
 		
@@ -523,8 +521,7 @@ public class VentanaUsuario extends JFrame {
 				table.getColumnModel().getColumn(2).setCellRenderer(nombreVideoRenderer);
 				
 				if (vi.getPuesto() != numeroPuestoAnterior) {
-
-					// establecer el renderer personalizado en la tabla
+									
 					String puesto = "Puesto "+vi.getPuesto();
 					
 			        Object file[] = {	  
@@ -536,8 +533,9 @@ public class VentanaUsuario extends JFrame {
 
 			        modelo.addRow(file);
 				} else {
-			        // Mostrar solo el nombre del video en filas consecutivas con el mismo número de puesto
-			        Object file[] = {
+			 
+					// establecer el renderer personalizado en la tabla
+					Object file[] = {
 			            "", // Espacio vacío en lugar del número de puesto
 			            codigo_video = vi.getCod_video(),
 			            vi.getNombre(),

@@ -308,42 +308,63 @@ public class VentanaSubir extends JFrame {
 						// Crear el nuevo nombre de archivo con la nueva extensión
 						String sOrigenMp4 = nombreSinExtension + "_" + sFechaActual + sExtensionNueva;
 						Path pOrigenMp4 = Paths.get(sOrigenMp4);
-						if (!extensionActual.equalsIgnoreCase(".mp4") && !Files.exists(pOrigenMp4) ) {
-							try {
-							    ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "\"\"", "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg", "-i", sOrigen, "-c:v", "libx264", "-b:v", "1.5M", "-c:a", "aac", "-b:a", "128k", sOrigenMp4);
-								pb.redirectErrorStream(true);
-							    Process p = pb.start();							    
-							    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-							} catch (IOException e1) {
-							    e1.printStackTrace();
+						System.out.print("sDestino: "+sDestino);
+						 // Crear las carpetas si no existen
+			            String sCarpetaRef = sDestino.substring(0, sDestino.indexOf("\\", 3)+1) + sRef_producto;
+			            File carpetaRef = new File(sCarpetaRef);
+			            if (!carpetaRef.exists()) {
+			                carpetaRef.mkdir();
+			            }
+			            String sCarpetaPuesto = sCarpetaRef + "\\Puesto" + iPuesto;
+			            File carpetaPuesto = new File(sCarpetaPuesto);
+			            if (!carpetaPuesto.exists()) {
+			                carpetaPuesto.mkdir();
+			            }
+						
+						if (!Files.exists(pOrigenMp4)){
+							if (!extensionActual.equalsIgnoreCase(".mp4")) {
+								try {
+								    ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "\"\"", "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg", "-i", sOrigen, "-c:v", "libx264", "-b:v", "1.5M", "-c:a", "aac", "-b:a", "128k", sOrigenMp4);
+									pb.redirectErrorStream(true);
+								    Process p = pb.start();							    
+								    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+								} catch (IOException e1) {
+								    e1.printStackTrace();
+								}					            
 							}
-							 // Crear las carpetas si no existen
-				            String sCarpetaRef = sDestino.substring(0, sDestino.indexOf("\\", 3)+1) + sRef_producto;
-				            File carpetaRef = new File(sCarpetaRef);
-				            if (!carpetaRef.exists()) {
-				                carpetaRef.mkdir();
-				            }
-				            String sCarpetaPuesto = sCarpetaRef + "\\Puesto" + iPuesto;
-				            File carpetaPuesto = new File(sCarpetaPuesto);
-				            if (!carpetaPuesto.exists()) {
-				                carpetaPuesto.mkdir();
-				            }
-				          
-							sNombre = sOrigenMp4;
-							iRef_producto = Integer.parseInt(sRef_producto);
-							java.sql.Date fechaActual = new java.sql.Date(System.currentTimeMillis());
-
-							Video vi = new Video(sNombre,iRef_producto,iPuesto,fechaActual); 				
-							VideoDAO videoDAO = new VideoDAO();
-							iResultado = videoDAO.insertarVideo(vi);	
-							if (iResultado == 0) {
-								JOptionPane.showMessageDialog(null, "No se ha podido insertar vídeo");
-							}
-							dispose();
+					       else {
+									//COPIAR EL ARCHIVO SI YA ES MP4
+									//esto copia el archivo si no existe
+									Path pOrigen = Paths.get(sOrigen);
+									Path pOrigenMp41 = Paths.get(sOrigenMp4);
+									System.out.print(pOrigen+"\n");
+									System.out.print(pOrigenMp41);
+									try {
+										Files.copy(pOrigen, pOrigenMp41, StandardCopyOption.REPLACE_EXISTING);
+									} catch (IOException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+									
+					            }
+						
+								sNombre = sOrigenMp4;
+								iRef_producto = Integer.parseInt(sRef_producto);
+								java.sql.Date fechaActual = new java.sql.Date(System.currentTimeMillis());
+	
+								Video vi = new Video(sNombre,iRef_producto,iPuesto,fechaActual); 				
+								VideoDAO videoDAO = new VideoDAO();
+								iResultado = videoDAO.insertarVideo(vi);	
+								if (iResultado == 0) {
+									JOptionPane.showMessageDialog(null, "No se ha podido insertar vídeo");
+								}
+								dispose();
+							
 						}
-						else {
+						else{
 							JOptionPane.showMessageDialog(null, "El vídeo ya existe", "Error", JOptionPane.WARNING_MESSAGE);
 						}
+						
 							
 					} 				
 					else {
