@@ -203,7 +203,7 @@ public class VentanaUsuario extends JFrame {
 		table.getColumnModel().getColumn(4).setMaxWidth(90);
 		
 		// Crear un DefaultTableCellRenderer personalizado para alinear el texto centrado en la columna 0 y 
-		//fondo verde y letras negrita
+		//fondo gris y letras negrita
 		DefaultTableCellRenderer puestoRenderer = new DefaultTableCellRenderer();
 		Color backgroundPuesto = Color.LIGHT_GRAY;
 		puestoRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
@@ -283,7 +283,7 @@ public class VentanaUsuario extends JFrame {
 		JButton btnCerrar = new JButton();
 		btnCerrar.setOpaque(false);
 		btnCerrar.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnCerrar.setBounds(105, 32, 33, 31);
+		btnCerrar.setBounds(88, 32, 33, 31);
 		String imagePath = "/imagenes/cerrar.png";
 		URL imageURL = getClass().getResource(imagePath);
 		ImageIcon icon = new ImageIcon(imageURL);
@@ -336,8 +336,8 @@ public class VentanaUsuario extends JFrame {
 		lblNewLabel_2.setForeground(new Color(255, 255, 255));
 		lblNewLabel_2.setBackground(new Color(0, 57, 9));
 		lblNewLabel_2.setOpaque(true);
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_2.setBounds(162, 50, 310, 13);
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNewLabel_2.setBounds(131, 32, 341, 31);
 		contentPane.add(lblNewLabel_2);
 		
 		JLabel lblUsuario = new JLabel("");
@@ -519,31 +519,32 @@ public class VentanaUsuario extends JFrame {
 	
 				// Asignar el renderizador a la columna del nombre del video (suponiendo que sea la columna 2)
 				table.getColumnModel().getColumn(2).setCellRenderer(nombreVideoRenderer);
-				
-				if (vi.getPuesto() != numeroPuestoAnterior) {
-									
-					String puesto = "Puesto "+vi.getPuesto();
-					
-			        Object file[] = {	  
-			            puesto,	
-			            codigo_video = vi.getCod_video(),			  
-			            vi.getNombre(),
-			            sFecha = formatoFecha.format(vi.getFecha_subida())
-			        };
+							
+				Object file[]=null;
+						if (vi.getPuesto() != numeroPuestoAnterior) {
+							
+							String puesto = "Puesto "+vi.getPuesto();
+					        file = new Object[]  {	  
+					            puesto,	
+					            codigo_video = vi.getCod_video(),			  
+					            vi.getNombre(),
+					            sFecha = formatoFecha.format(vi.getFecha_subida())
+					        };
+		
+					        modelo.addRow(file);
+						} else {
 
-			        modelo.addRow(file);
-				} else {
-			 
-					// establecer el renderer personalizado en la tabla
-					Object file[] = {
-			            "", // Espacio vacío en lugar del número de puesto
-			            codigo_video = vi.getCod_video(),
-			            vi.getNombre(),
-			            formatoFecha.format(vi.getFecha_subida()),
-			        };
-			        modelo.addRow(file);
-			    }
-			    numeroPuestoAnterior = vi.getPuesto();
+							file = new Object[] {
+
+					            "", // Espacio vacío en lugar del número de puesto
+					            codigo_video = vi.getCod_video(),
+					            vi.getNombre(),
+					            formatoFecha.format(vi.getFecha_subida()),
+					        };
+					        modelo.addRow(file);				
+						}
+
+			    numeroPuestoAnterior = vi.getPuesto();		    
 			}
 		  }
 		
@@ -557,7 +558,11 @@ public class VentanaUsuario extends JFrame {
 	    }
 	    public Component getTableCellRendererComponent(JTable table, Object value,
 	            boolean isSelected, boolean hasFocus, int row, int column) {
-	    	setText("VÍDEO");	
+	    	//setText("Reproducir");
+	    	 String imagePath = "/imagenes/video3.png";
+	    		URL imageURL = getClass().getResource(imagePath);
+	    		ImageIcon icon = new ImageIcon(imageURL);
+	    		setIcon(icon);
 	        return this;
 	    }
 	}
