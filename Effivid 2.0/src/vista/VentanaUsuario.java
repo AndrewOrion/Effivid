@@ -488,6 +488,7 @@ public class VentanaUsuario extends JFrame {
 		
 		DefaultTableModel modelo = (DefaultTableModel) table.getModel();//siempre
 		modelo.setRowCount(0);//a cero
+		
 		TableCellEditor MiTabla = table.getCellEditor(); 
 		// Crear un renderizador personalizado para la columna de botones
 		TableColumn button = table.getColumnModel().getColumn(4); // Obtener la columna de botones (índice 4)
