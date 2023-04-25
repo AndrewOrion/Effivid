@@ -52,6 +52,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JTextField;
+import javax.swing.LookAndFeel;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.DefaultComboBoxModel;
@@ -60,6 +61,7 @@ import javax.swing.JSpinner;
 import modelo.Video;
 import dao.VideoDAO;
 import javax.swing.ImageIcon;
+import javax.swing.SpinnerNumberModel;
 
 public class VentanaSubir extends JFrame {
 
@@ -130,7 +132,11 @@ public class VentanaSubir extends JFrame {
 		btnExplorar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				// Guardar la apariencia actual
+				LookAndFeel savedLookAndFeel = UIManager.getLookAndFeel();
+
 				//SELECCIONAR VIDEO A INSERTAR
+					//CAMBIAR APARIENCIA DE FILECHOOSER
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
@@ -158,10 +164,25 @@ public class VentanaSubir extends JFrame {
 		        		archivoSeleccionado = ExploradorArchivos.getSelectedFile();
 			            //System.out.println(archivoSeleccionado.getName());
 		 		       textArchivo.setText(archivoSeleccionado.getName());
+		 		      
+		 		       //VOLVER A LA APARIENCIA NORMAL PARA QUE LOS BOTONES SE VEAN BIEN
+		 		       try {
+		 		    	   UIManager.setLookAndFeel(savedLookAndFeel);
+		 		       } catch (UnsupportedLookAndFeelException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+		 		       }
 
 		        }
-		       /* else if (iSeleccion == JFileChooser.CANCEL_OPTION) {
-		        }*/
+		        else if (iSeleccion == JFileChooser.CANCEL_OPTION) {
+		        	  //VOLVER A LA APARIENCIA NORMAL PARA QUE LOS BOTONES SE VEAN BIEN
+		 		       try {
+		 		    	   UIManager.setLookAndFeel(savedLookAndFeel);
+		 		       } catch (UnsupportedLookAndFeelException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+		 		       }
+		        }
 			}
 		});
 		btnExplorar.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -172,6 +193,18 @@ public class VentanaSubir extends JFrame {
 		btnDestino.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				// Guardar la apariencia actual
+				LookAndFeel savedLookAndFeel = UIManager.getLookAndFeel();
+
+				//SELECCIONAR VIDEO A INSERTAR
+					//CAMBIAR APARIENCIA DE FILECHOOSER
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+						| UnsupportedLookAndFeelException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}		
 				//GUARDADO DEL VIDEO SELECCIONADO
 			        JFileChooser ExploradorArchivos2 = new JFileChooser("c:\\videos\\");
 
@@ -197,15 +230,30 @@ public class VentanaSubir extends JFrame {
 			        iSeleccionado = ExploradorArchivos2.showSaveDialog(null);
 			    
 		        // Una vez pulsado el boton de guardar se recoge la ruta absoluta del video
-		        if (iSeleccionado == JFileChooser.APPROVE_OPTION) 
-		        {
+		        if (iSeleccionado == JFileChooser.APPROVE_OPTION){
 		           archivoDestino = ExploradorArchivos2.getSelectedFile();
 		           
 		            System.out.println("Archivo guardado como: " + archivoDestino.getAbsolutePath());
 		            textDestino.setText(archivoDestino.getAbsolutePath());
+		            
+		            //VOLVER A LA APARIENCIA NORMAL PARA QUE LOS BOTONES SE VEAN BIEN
+		 		       try {
+		 		    	   UIManager.setLookAndFeel(savedLookAndFeel);
+		 		       } catch (UnsupportedLookAndFeelException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+		 		       }       
 		        }
-			    }
-			
+		        else if (iSeleccionado == JFileChooser.CANCEL_OPTION) {
+		        	  //VOLVER A LA APARIENCIA NORMAL PARA QUE LOS BOTONES SE VEAN BIEN
+		 		       try {
+		 		    	   UIManager.setLookAndFeel(savedLookAndFeel);
+		 		       } catch (UnsupportedLookAndFeelException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+		 		       }
+		        }
+			}	
 		});
 		btnDestino.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnDestino.setBounds(559, 253, 93, 29);
@@ -246,11 +294,8 @@ public class VentanaSubir extends JFrame {
 						String sNombreOrigen = textArchivo.getText();
 						sDestino = sDestino + sNombreOrigen;
 						sOrigen = archivoSeleccionado.toString();
-						System.out.print(sOrigen);
-						//sExtension = "." + archivoSeleccionado.getName().substring(archivoSeleccionado.getName().lastIndexOf(".") + 1);
 						String sExtensionNueva =".mp4";
-						//Path fuente = Paths.get(archivoSeleccionado.getAbsolutePath());
-						//sOrigen = fuente.toString();
+						
 						
 						// Encontrar la posición del último punto en el nombre del archivo
 						int posicionPunto = sDestino.lastIndexOf(".");
@@ -316,6 +361,7 @@ public class VentanaSubir extends JFrame {
 		lblPuesto.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblPuesto.setBounds(117, 110, 97, 29);
 		contentPane.add(lblPuesto);
+		spinnerPuesto.setModel(new SpinnerNumberModel(0, 0, 25, 1));
 		
 		// ********************************************************************************
 		spinnerPuesto.addChangeListener(new ChangeListener() {
@@ -372,8 +418,6 @@ public class VentanaSubir extends JFrame {
 		lblNewLabel_3.setBounds(0, 0, 900, 900);
 		Image img2 = icon2.getImage().getScaledInstance(lblNewLabel_3.getWidth(), lblNewLabel_3.getHeight(), Image.SCALE_SMOOTH);
 		lblNewLabel_3.setIcon(new ImageIcon(img2));
-		contentPane.add(lblNewLabel_3);
-		
-
+		contentPane.add(lblNewLabel_3);	
 	}
 }
