@@ -50,6 +50,8 @@ public class VentanaUsuario extends JFrame {
 	{
 		
 	this.conexion = new ConexionBD();
+	
+	setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 
 	//DEFINIR COMBOBOX PRODUCTO
 			JComboBox<String> cbProducto = new JComboBox<String>();

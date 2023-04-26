@@ -77,6 +77,7 @@ public class VentanaSubir extends JFrame {
 	
 	public VentanaSubir(String sRef) {
 		setResizable(false);
+		setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 690, 442);
 		contentPane = new JPanel();
@@ -146,8 +147,9 @@ public class VentanaSubir extends JFrame {
 				}		
 				int iSeleccion;
 				int iRespuesta;
-				
+
 		        JFileChooser ExploradorArchivos = new JFileChooser();
+
 		        ExploradorArchivos.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
 
 		        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de video", "mp4", "avi", "mov", "wmv", "flv","mkv");
@@ -157,7 +159,7 @@ public class VentanaSubir extends JFrame {
 		     
 		        // Explorador de archivos para seleccionar un video
 		        iSeleccion = ExploradorArchivos.showOpenDialog(null);
-		        
+
 		        // Si se selecciona un video, elegir donde guardarlo
 		        if (iSeleccion == JFileChooser.APPROVE_OPTION) 
 		        {
@@ -324,7 +326,8 @@ public class VentanaSubir extends JFrame {
 						if (!Files.exists(pOrigenMp4)){
 							if (!extensionActual.equalsIgnoreCase(".mp4")) {
 								try {
-								    ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "\"\"", "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg", "-i", sOrigen, "-c:v", "libx264", "-b:v", "1.5M", "-c:a", "aac", "-b:a", "128k", sOrigenMp4);
+								    //ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "\"\"", "c:\\Andrew\\JAVA\\ffmpeg\\bin\\ffmpeg", "-i", sOrigen, "-c:v", "libx264", "-b:v", "1.5M", "-c:a", "aac", "-b:a", "128k", sOrigenMp4);
+								    ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "start", "\"\"", "c:\\Effivid\\ffmpeg\\bin\\ffmpeg", "-i", sOrigen, "-c:v", "libx264", "-b:v", "1.5M", "-c:a", "aac", "-b:a", "128k", sOrigenMp4);
 									pb.redirectErrorStream(true);
 								    Process p = pb.start();							    
 								    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
