@@ -9,7 +9,7 @@ public class ConexionBD
 	// Parámetros de la conexión
 			private static String database="efficold";
 			private static String usuario="root";
-			private static String contraseña="1234";
+			private static String contrasena="1234";
 			private static String url="jdbc:mysql://localhost/"+database;
 
 			private Connection conexion = null;
@@ -29,7 +29,7 @@ public class ConexionBD
 					// Obtenemos la conexión a través del DriverManager.
 					// Este código es susceptible de enviar una excepción
 					//  SQLException si no se establece la conexión
-					conexion = DriverManager.getConnection(url,usuario,contraseña);
+					conexion = DriverManager.getConnection(url,usuario,contrasena);
 					System.out.println("Conexión a base de datos correcta.");
 				}
 				catch (ClassNotFoundException e)
