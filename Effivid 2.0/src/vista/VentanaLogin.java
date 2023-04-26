@@ -120,6 +120,7 @@ public class VentanaLogin extends JFrame {
 		panel_2.add(lblNewLabel_2);
 
 		textUsuario = new JTextField();
+		textUsuario.setFont(new Font("Tahoma", Font.BOLD, 15));
 		textUsuario.setBounds(174, 94, 299, 32);
 textUsuario.setText("ruizabalos_i");//quitar
 		panel_2.add(textUsuario);
@@ -197,6 +198,7 @@ textUsuario.setText("ruizabalos_i");//quitar
 		panel_2.add(btnNewButton_1);
 
 		textPassword = new JPasswordField();
+		textPassword.setFont(new Font("Tahoma", Font.BOLD, 15));
 		textPassword.setBounds(174, 175, 299, 29);
 textPassword.setText("229");//quitar
 		panel_2.add(textPassword);
