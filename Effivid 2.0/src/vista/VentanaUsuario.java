@@ -34,6 +34,8 @@ import java.nio.file.Paths;
 import javax.swing.*;
 import java.awt.*;
 import dao.PersonaDAO;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
 @SuppressWarnings("serial")
 public class VentanaUsuario extends JFrame {
 
@@ -58,6 +60,9 @@ public class VentanaUsuario extends JFrame {
 			JComboBox<String> cbProducto = new JComboBox<String>();
 			cbProducto.setFont(new Font("Tahoma", Font.BOLD, 15));
 			cbProducto.setBounds(189, 336, 297, 31);
+			//cbModelo.setBackground(Color.GREEN);
+
+
 			PersonaDAO usuario = new PersonaDAO();
 			Persona user = usuario.obtenerNombre(nombreUsuario);
 			String bienvenido = user.getNombre();
@@ -76,14 +81,13 @@ public class VentanaUsuario extends JFrame {
 			}
 			cbProducto.setSelectedIndex(0);
 			cbProducto.repaint();
-			
 		//DEFINIR COMBOBOX MODELO
 			
 			JComboBox<String> cbModelo = new JComboBox<String>();
 			
 			cbModelo.setFont(new Font("Tahoma", Font.BOLD, 15));
 			cbModelo.setBounds(189, 398, 297, 31);
-			//cbModelo.setBackground(new Color(200, 225, 200));
+			//cbModelo.setBackground(Color.GREEN);
 
 			cbModelo.addItem("- Seleccione el modelo -");
 
@@ -129,7 +133,7 @@ public class VentanaUsuario extends JFrame {
 	
 		txtRef = new JTextField();
 		txtRef.setToolTipText("Inserte el número de referencia del producto sobre el que desee ver el vídeo");
-		txtRef.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		txtRef.setFont(new Font("Tahoma", Font.BOLD, 15));
 		txtRef.setBounds(223, 168, 249, 31);
 		contentPane.add(txtRef);
 		txtRef.setColumns(10);
@@ -301,6 +305,8 @@ public class VentanaUsuario extends JFrame {
 		contentPane.add(btnVer);
 		
 		JButton btnCerrar = new JButton();
+		btnCerrar.setBorder(null);
+		btnCerrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCerrar.setOpaque(false);
 		btnCerrar.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnCerrar.setBounds(88, 32, 33, 31);

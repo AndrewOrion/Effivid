@@ -7,6 +7,8 @@ import java.awt.TrayIcon;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.AWTException;
+import java.awt.Color;
+
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
