@@ -118,14 +118,15 @@ public class VentanaLogin extends JFrame {
 		btnNewbutton.setBounds(150, 263, 109, 41);
 
 		btnNewbutton.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				String sUsuario;
-				String sContrasena;
+				char[] sContrasena;
 				PersonaDAO personaDAO;
 				
 				
 				sUsuario = textUsuario.getText();
-				sContrasena = textPassword.getText();
+				sContrasena = textPassword.getPassword();
 				
 				 if(sUsuario.equals("") || sContrasena.equals(""))
 				 {
@@ -136,7 +137,8 @@ public class VentanaLogin extends JFrame {
 				
 				 try 
 				 {
-					 	int iContrasena = Integer.valueOf(sContrasena);
+					 	String sContrasenaString = new String(sContrasena);
+					 	int iContrasena = Integer.valueOf(sContrasenaString);
 					 	personaDAO= new PersonaDAO();
 						boolean loginValido = personaDAO.validarLogin(iContrasena, sUsuario);
 						
@@ -188,9 +190,27 @@ public class VentanaLogin extends JFrame {
 		textPassword = new JPasswordField();
 		textPassword.setFont(new Font("Tahoma", Font.BOLD, 15));
 		textPassword.setBounds(174, 175, 299, 29);
+
 //textPassword.setText("229");//quitar
 		panel_2.add(textPassword);
 		
+		JCheckBox chckbxMostrarContrasena = new JCheckBox("Mostrar contraseña");
+		chckbxMostrarContrasena.setOpaque(false);
+		chckbxMostrarContrasena.setBounds(174, 211, 147, 21);
+		panel_2.add(chckbxMostrarContrasena);
+		
+		// Agregar el ActionListener al checkbox
+		chckbxMostrarContrasena.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        if (chckbxMostrarContrasena.isSelected()) {
+		            // Si el checkbox está seleccionado, mostrar la contraseña en texto claro
+		            textPassword.setEchoChar((char)0);
+		        } else {
+		            // Si el checkbox no está seleccionado, ocultar la contraseña
+		            textPassword.setEchoChar('*');
+		        }
+		    }
+		});
 		
 
 	//	ImageIcon icon = new ImageIcon("/imagenes/logo.png");

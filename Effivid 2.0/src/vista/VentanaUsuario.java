@@ -57,7 +57,7 @@ public class VentanaUsuario extends JFrame {
 			JComboBox<String> cbProducto = new JComboBox<String>();
 			cbProducto.setFont(new Font("Tahoma", Font.BOLD, 15));
 			cbProducto.setBounds(189, 336, 297, 31);
-			cbProducto.setBackground(new Color(227, 255, 235));
+			cbProducto.setBackground(new Color(200, 225, 200));
 			PersonaDAO usuario = new PersonaDAO();
 			Persona user = usuario.obtenerNombre(nombreUsuario);
 			String bienvenido = user.getNombre();
@@ -82,7 +82,7 @@ public class VentanaUsuario extends JFrame {
 			
 			cbModelo.setFont(new Font("Tahoma", Font.BOLD, 15));
 			cbModelo.setBounds(189, 398, 297, 31);
-			cbModelo.setBackground(new Color(227, 255, 235));
+			cbModelo.setBackground(new Color(200, 225, 200));
 
 			cbModelo.addItem("- Seleccione el modelo -");
 
@@ -359,13 +359,15 @@ public class VentanaUsuario extends JFrame {
 		
 		if (tipo.equals("admin")) {
 			JPanel panelAdmin = new JPanel();
+			panelAdmin.setOpaque(false);
 			panelAdmin.setBorder(null);
-			panelAdmin.setBackground(new Color(225, 255, 239));
 			panelAdmin.setBounds(10, 532, 469, 169);
 			contentPane.add(panelAdmin);
 			panelAdmin.setLayout(null);
 			
 			JButton btnAdd = new JButton("AÑADIR VÍDEO");
+			Border bordePersonalizadoA = BorderFactory.createLineBorder(Color.GREEN);	
+			btnAdd.setBorder(bordePersonalizadoA);
 			btnAdd.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (txtRef.getText().equals("")) {
@@ -381,6 +383,8 @@ public class VentanaUsuario extends JFrame {
 			panelAdmin.add(btnAdd);
 			
 			JButton btnEliminar = new JButton("ELIMINAR VÍDEO");
+			Border bordePersonalizadoE = BorderFactory.createLineBorder(Color.RED);	
+			btnEliminar.setBorder(bordePersonalizadoE);
 			btnEliminar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int iElemento=-1;
@@ -615,7 +619,7 @@ public class VentanaUsuario extends JFrame {
 			}
 	}
 		
-	// RENDERIZADOR PARA QUE SOLO MUESTRE EL NOMBRE DEL VIDEO EN LA COLUMNA NOMBRE
+	// RENDERIZADOR PERSONALIZADO PARA QUE SOLO MUESTRE EL NOMBRE DEL VIDEO EN LA COLUMNA NOMBRE
 	//PERO QUE REALMENTE SIGA ALMACENANDO TODA LA RUTA DEL VIDEO
 	public class NombreVideoRenderer extends DefaultTableCellRenderer {
 
@@ -632,4 +636,5 @@ public class VentanaUsuario extends JFrame {
 	        return super.getTableCellRendererComponent(table, nombreVideo, isSelected, hasFocus, row, column);
 	    }
 	}
+	
 }
