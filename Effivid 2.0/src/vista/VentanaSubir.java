@@ -62,6 +62,7 @@ import modelo.Video;
 import dao.VideoDAO;
 import javax.swing.ImageIcon;
 import javax.swing.SpinnerNumberModel;
+import java.awt.Cursor;
 
 public class VentanaSubir extends JFrame {
 
@@ -119,6 +120,7 @@ public class VentanaSubir extends JFrame {
 		contentPane.add(textDestino);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -130,6 +132,7 @@ public class VentanaSubir extends JFrame {
 		contentPane.add(btnCancelar);
 		
 		JButton btnExplorar = new JButton("Explorar");
+		btnExplorar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnExplorar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -192,6 +195,7 @@ public class VentanaSubir extends JFrame {
 		contentPane.add(btnExplorar);
 		
 		JButton btnDestino = new JButton("Destino");
+		btnDestino.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDestino.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -262,6 +266,7 @@ public class VentanaSubir extends JFrame {
 		contentPane.add(btnDestino);
 		
 		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		JProgressBar progressBar = new JProgressBar(0, 100);
 		progressBar.setStringPainted(true);
 		progressBar.setVisible(false);

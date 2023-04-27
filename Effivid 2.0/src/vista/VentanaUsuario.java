@@ -54,10 +54,10 @@ public class VentanaUsuario extends JFrame {
 	setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 
 	//DEFINIR COMBOBOX PRODUCTO
+				
 			JComboBox<String> cbProducto = new JComboBox<String>();
 			cbProducto.setFont(new Font("Tahoma", Font.BOLD, 15));
 			cbProducto.setBounds(189, 336, 297, 31);
-			cbProducto.setBackground(new Color(200, 225, 200));
 			PersonaDAO usuario = new PersonaDAO();
 			Persona user = usuario.obtenerNombre(nombreUsuario);
 			String bienvenido = user.getNombre();
@@ -78,11 +78,12 @@ public class VentanaUsuario extends JFrame {
 			cbProducto.repaint();
 			
 		//DEFINIR COMBOBOX MODELO
+			
 			JComboBox<String> cbModelo = new JComboBox<String>();
 			
 			cbModelo.setFont(new Font("Tahoma", Font.BOLD, 15));
 			cbModelo.setBounds(189, 398, 297, 31);
-			cbModelo.setBackground(new Color(200, 225, 200));
+			//cbModelo.setBackground(new Color(200, 225, 200));
 
 			cbModelo.addItem("- Seleccione el modelo -");
 
@@ -94,6 +95,7 @@ public class VentanaUsuario extends JFrame {
 					String sDenominacion = cbProducto.getSelectedItem().toString();
 						
 		//VACIAR Y RELLENAR COMBOBOX MODELO
+					
 				cbModelo.removeAllItems();
 				if (cbProducto.getSelectedIndex()==0) {
 					cbModelo.addItem("- Seleccione el modelo -");
@@ -159,7 +161,7 @@ public class VentanaUsuario extends JFrame {
 		lblNewLabel_1.setOpaque(true);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(131, 103, 341, 31);
+		lblNewLabel_1.setBounds(99, 91, 373, 43);
 		contentPane.add(lblNewLabel_1);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -254,6 +256,23 @@ public class VentanaUsuario extends JFrame {
 		
 		
 		JButton btnVer = new JButton("Ver");
+		btnVer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnVer.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnVer.setBounds(341, 466, 131, 31);
+		
+		btnVer.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	btnVer.setForeground(Color.GRAY);
+		    	btnVer.setFont(new Font("Tahoma", Font.BOLD, 13));
+		    }
+
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	btnVer.setForeground(Color.BLACK);
+		    	btnVer.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		    }
+		});
+		
 		btnVer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -278,8 +297,7 @@ public class VentanaUsuario extends JFrame {
 			}	
 			
 		});
-		btnVer.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnVer.setBounds(341, 466, 131, 31);
+		
 		contentPane.add(btnVer);
 		
 		JButton btnCerrar = new JButton();
@@ -304,6 +322,23 @@ public class VentanaUsuario extends JFrame {
 		
 		//Boton ver referencia
 		JButton btnVerRef = new JButton("Ver");
+		btnVerRef.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnVerRef.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnVerRef.setBounds(341, 227, 131, 31);
+		
+		btnVerRef.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	btnVerRef.setForeground(Color.GRAY);
+		    	btnVerRef.setFont(new Font("Tahoma", Font.BOLD, 13));
+		    }
+
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	btnVerRef.setForeground(Color.BLACK);
+		    	btnVerRef.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		    }
+		});
+		
 		btnVerRef.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String sProducto = "";
@@ -329,8 +364,7 @@ public class VentanaUsuario extends JFrame {
 				}				
 			}
 		});
-		btnVerRef.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnVerRef.setBounds(341, 227, 131, 31);
+		
 		contentPane.add(btnVerRef);
 		
 		
@@ -366,8 +400,25 @@ public class VentanaUsuario extends JFrame {
 			panelAdmin.setLayout(null);
 			
 			JButton btnAdd = new JButton("AÑADIR VÍDEO");
-			Border bordePersonalizadoA = BorderFactory.createLineBorder(Color.GREEN);	
-			btnAdd.setBorder(bordePersonalizadoA);
+			//Border bordePersonalizadoA = BorderFactory.createLineBorder(Color.GREEN);	
+			//btnAdd.setBorder(bordePersonalizadoA);
+			btnAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			btnAdd.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnAdd.setBounds(81, 81, 169, 44);
+			
+			btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+			    public void mouseEntered(java.awt.event.MouseEvent evt) {
+			    	btnAdd.setForeground(Color.GRAY);
+			    	btnAdd.setFont(new Font("Tahoma", Font.BOLD, 13));
+			    }
+
+			    public void mouseExited(java.awt.event.MouseEvent evt) {
+			    	btnAdd.setForeground(Color.BLACK);
+			    	btnAdd.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+			    }
+			});
+			
 			btnAdd.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (txtRef.getText().equals("")) {
@@ -378,13 +429,29 @@ public class VentanaUsuario extends JFrame {
 					}			
 				}
 			});
-			btnAdd.setFont(new Font("Tahoma", Font.BOLD, 15));
-			btnAdd.setBounds(81, 81, 169, 44);
+			
 			panelAdmin.add(btnAdd);
 			
 			JButton btnEliminar = new JButton("ELIMINAR VÍDEO");
-			Border bordePersonalizadoE = BorderFactory.createLineBorder(Color.RED);	
-			btnEliminar.setBorder(bordePersonalizadoE);
+			//Border bordePersonalizadoE = BorderFactory.createLineBorder(Color.RED);	
+			//btnEliminar.setBorder(bordePersonalizadoE);
+			btnEliminar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnEliminar.setBounds(276, 81, 183, 44);
+			
+			btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+			    public void mouseEntered(java.awt.event.MouseEvent evt) {
+			    	btnEliminar.setForeground(Color.GRAY);
+			    	btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 13));
+			    }
+
+			    public void mouseExited(java.awt.event.MouseEvent evt) {
+			    	btnEliminar.setForeground(Color.BLACK);
+			    	btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+			    }
+			});
+			
 			btnEliminar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int iElemento=-1;
@@ -438,8 +505,7 @@ public class VentanaUsuario extends JFrame {
 					}
 				}
 			});
-			btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 15));
-			btnEliminar.setBounds(276, 81, 183, 44);
+			
 			panelAdmin.add(btnEliminar);
 			
 			JLabel lblNewLabel_3 = new JLabel("Opciones de administrador:");

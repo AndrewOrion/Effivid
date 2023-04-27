@@ -8,6 +8,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.AWTException;
 import javax.swing.ImageIcon;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import vista.VentanaLogin;
 
@@ -17,9 +19,17 @@ public class Principal {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-			
+						try 
+						{
+							UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+						} 
+						catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+								| UnsupportedLookAndFeelException e1) 
+						{
+							e1.printStackTrace();
+						}
 						VentanaLogin frame = new VentanaLogin();
-						//frame.setLocation(100, 30); // establecer la posición de la ventana
+						
 						frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 						
 						frame.setVisible(true);

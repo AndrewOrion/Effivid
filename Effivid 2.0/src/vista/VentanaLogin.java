@@ -114,8 +114,23 @@ public class VentanaLogin extends JFrame {
 		panel_2.add(textUsuario);
 		textUsuario.setColumns(10);
 
-		MyButton btnNewbutton = new MyButton("ACEPTAR");
+		JButton btnNewbutton = new JButton("ACEPTAR");
+		btnNewbutton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnNewbutton.setBounds(150, 263, 109, 41);
+		btnNewbutton.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		btnNewbutton.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	btnNewbutton.setForeground(Color.GRAY);
+				btnNewbutton.setFont(new Font("Tahoma", Font.BOLD, 13));
+		    }
+
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	btnNewbutton.setForeground(Color.BLACK);
+				btnNewbutton.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		    }
+		});
 
 		btnNewbutton.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
@@ -174,17 +189,32 @@ public class VentanaLogin extends JFrame {
 				 	}
 				}
 			});
-		
 		panel_2.add(btnNewbutton);
 
-		MyButton btnNewButton_1 = new MyButton("SALIR");
+		JButton btnNewButton_1 = new JButton("SALIR");
+		btnNewButton_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnNewButton_1.setBounds(364, 263, 109, 41);
+
+
+		btnNewButton_1.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	btnNewButton_1.setForeground(Color.GRAY);
+		    	btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		    }
+
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	btnNewButton_1.setForeground(Color.BLACK);
+		    	btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		    }
+		});
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
-		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnNewButton_1.setBounds(364, 263, 109, 41);
+	
 		panel_2.add(btnNewButton_1);
 
 		textPassword = new JPasswordField();
@@ -235,7 +265,7 @@ public class VentanaLogin extends JFrame {
 	//	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 	}
-	
+	/*//ESTILO PERSONALIZADO BOTONES
 	public class MyButton extends JButton {
 	    
 	    public MyButton(String text) {
@@ -258,5 +288,5 @@ public class VentanaLogin extends JFrame {
 	        
 	        super.paintComponent(g);
 	    }
-	}
+	}*/
 }
