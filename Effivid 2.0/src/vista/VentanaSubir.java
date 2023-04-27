@@ -419,7 +419,7 @@ public class VentanaSubir extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		
-		lblRef.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblRef.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblRef.setBounds(232, 57, 83, 26);
 		lblRef.setText(sRef);
 		contentPane.add(lblRef);

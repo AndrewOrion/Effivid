@@ -116,8 +116,7 @@ public class VentanaUsuario extends JFrame {
 				cbModelo.setSelectedItem("- Seleccione el modelo -");
 				cbModelo.repaint();
 			}
-			});
-		
+			});		
 		
 		setTitle("Visualización de videos");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
